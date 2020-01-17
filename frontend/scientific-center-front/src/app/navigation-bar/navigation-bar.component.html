@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+  <a class="navbar-brand">Scientific Center</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/">Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li [hidden]="!hasUser" class="nav-item">
+        <a class="nav-link" routerLink="/tasks">Task list</a>
+      </li>
+      <li [hidden]="!roles.includes('ROLE_EDITOR')" class="nav-item">
+        <a class="nav-link" routerLink="/magazine">Magazine</a>
+      </li>
+    </ul>
+    <ng-template #logInReg>
+      <span class="navbar-text actions">
+        <a routerLink="/login" routerLinkActive="active" class="btn btn-dark">Sign in</a>
+        <a style="color:rgb(0, 0, 0) " class="btn btn-light" routerLink="/register">Sign up</a>
+      </span>
+    </ng-template>
+    <span class="navbar-text actions" *ngIf="hasUser; else logInReg">
+      <a (click)="logOut()"  style="color:rgb(255,255,255);  margin:10px 10px 10px 10px; ">Log out</a>
+    </span>
+  </div>
+</nav>

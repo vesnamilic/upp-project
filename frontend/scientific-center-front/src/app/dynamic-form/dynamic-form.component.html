@@ -1,0 +1,40 @@
+  
+<div class="container-fluid">
+  <div class="row no-gutter">
+    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+    <div class="col-md-8 col-lg-6">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div *ngIf="!success" class="col-md-9 col-lg-8 mx-auto">
+              <h3 class="login-heading mb-4">Task Details</h3>
+              <form *ngIf="!formSubmited" class="form-class" #f="ngForm" (ngSubmit)="onSubmit(f)" ngNativeValidate>
+                <div  class="form-label-group" *ngFor="let field of formFields" >
+                    <label class="form-control-label" *ngIf="field.properties['multiselect']===undefined" for={{field.id}}>{{field.label}}</label>
+                    <input [readonly]="field.properties['readonly'] === 'readonly'" class="form-control" type="text" name={{field.id}} [(ngModel)]="field.defaultValue"  *ngIf="field.type.name=='string'" >
+                    <input [readonly]="field.properties['readonly'] === 'readonly'"   type="checkbox" name={{field.id}} [(ngModel)]="field.defaultValue" *ngIf="field.type.name=='boolean'">
+                    <input [readonly]="field.properties['readonly'] === 'readonly'"  class="form-control" type="number" name={{field.id}} [(ngModel)]="field.defaultValue" *ngIf="field.type.name=='long'">
+                    <select [disabled]="field.properties['readonly'] === 'readonly'"   class="form-control" name={{field.id}} ngModel  *ngIf="field.type.name=='enum' && field.properties['multiselect']===undefined">
+                      <option *ngFor="let option of enumSingleSelectValues[field.id]" value = {{option}}>
+                        {{field.type.values[option]}}
+                      </option>
+                    </select>
+                </div>
+                <div class="form-label-group" *ngFor="let enum of dropdownList;  index as i">
+                  <label class="form-control-label" for={{enumNames[i]}}>{{enumLabels[i]}}</label>
+                  <ng-multiselect-dropdown [name]="enumNames[i]" [data]="enum" [(ngModel)]="selectedItems[i]" [settings]="dropdownSettings"></ng-multiselect-dropdown>
+                </div>
+                <button class= "btn btn-lg btn-dark btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit"> Done</button>
+              </form>
+              <div *ngIf="formSubmited" class="loader" ></div>
+            </div>
+            <div *ngIf="success">
+              <h3 class="login-heading mb-4">Task completed!</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  

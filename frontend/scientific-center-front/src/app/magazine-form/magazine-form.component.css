@@ -1,0 +1,97 @@
+:root {
+    --input-padding-x: 1.5rem;
+    --input-padding-y: 0.75rem;
+}
+
+.form-class {
+    margin-bottom: 2rem;
+}
+.container-fluid {
+    margin-bottom: 2rem;
+}
+
+input[type="checkbox"] {
+    margin-left: 1em;
+    margin-top: 10px;
+    transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+}
+
+.login,
+.image {
+    min-height: 100vh;
+}
+
+.bg-image {
+    background-image: url('https://source.unsplash.com/RCAhiGJsUUE/1920x1080');
+    background-size: cover;
+    background-position: center;
+}
+
+.login-heading {
+    font-weight: 300;
+    margin-bottom: 1rem;
+    margin-top: 5rem;
+}
+
+.btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+}
+
+.form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+select {
+    width: 100%;
+    outline: none;
+}
+
+select:focus {
+    box-shadow: 0 0 3pt 2pt rgb(189, 221, 255);
+    border: 1px solid;
+    border-color: rgb(128, 189, 255);
+    border-radius: 2rem;
+}
+
+.form-label-group>select {
+    border-radius: 2rem;
+}
+
+/* Fallback for Edge
+    -------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+    .form-label-group select::-ms-input-placeholder {
+        color: #777;
+    }
+}
+
+/* Fallback for IE
+    -------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+    .form-label-group select:-ms-input-placeholder {
+        color: #777;
+    }
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #4d4c4c; /* Blue */
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 2s linear infinite;
+    margin-top: 2em;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

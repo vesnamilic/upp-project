@@ -1,0 +1,37 @@
+jwtSecret: jwtSecretKeyV2
+registrationProcessId: registrationProcessId
+
+camunda.bpm.admin-user:
+  id: vesna
+  password: vesna
+
+spring:
+  application:
+    name: service-registry
+  datasource:
+    url: jdbc:postgresql://localhost:5432/upp-project
+    username: postgres
+    password: root
+    initialization-mode: always  
+    sql-script-encoding: UTF-8
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+  mail:
+    host: smtp.gmail.com
+    username : timisaprojekat@gmail.com
+    password : isaprojekat.22
+    port : 587
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable : true
+ 
+  

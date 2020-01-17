@@ -1,0 +1,30 @@
+  
+<div class="container-fluid">
+  <div class="row no-gutter">
+    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+    <div class="col-md-8 col-lg-6">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 col-lg-8 mx-auto">
+              <h3 class="login-heading mb-4">Sign in</h3>
+              <form *ngIf="token == null" class="form-class" #f="ngForm" (ngSubmit)="onSubmit(f)" ngNativeValidate>
+                <div class="form-label-group" >
+                    <label class="form-control-label" for="username">Username</label>
+                    <input class="form-control" type="text" name="username" ngModel >
+                </div>
+                <div class="form-label-group" >
+                  <label class="form-control-label" for="password">Password</label>
+                  <input class="form-control" type="password" name="password" ngModel>
+              </div>
+                <button class= "btn btn-lg btn-dark btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit"> Sign in </button>
+              </form>
+              <p *ngIf="isSignedUp">Korisnik je ulogovan!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
