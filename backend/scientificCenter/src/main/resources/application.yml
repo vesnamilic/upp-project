@@ -2,8 +2,8 @@ jwtSecret: jwtSecretKeyV2
 registrationProcessId: registrationProcessId
 
 camunda.bpm.admin-user:
-  id: vesna
-  password: vesna
+  id: vesnamilic
+  password: admin
 
 spring:
   application:

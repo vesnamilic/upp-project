@@ -16,7 +16,7 @@
                   <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'" class="form-control" type="password" name={{field.id}} [(ngModel)]="field.defaultValue"   *ngIf="field.type.name=='string' && field.id =='password'" >
                   <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'"   type="checkbox" name={{field.id}} [(ngModel)]="field.defaultValue" *ngIf="field.type.name=='boolean'">
                   <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'"  class="form-control" type="number" name={{field.id}} [(ngModel)]="field.defaultValue" *ngIf="field.type.name=='long'">
-                  <select [required]="field.properties['required'] == 'required'" [disabled]="field.properties['readonly'] === 'readonly'"   class="form-control" name={{field.id}} ngModel  *ngIf="field.type.name=='enum' && field.properties['multiselect']===undefined">
+                  <select [required]="field.properties['required'] == 'required'" [disabled]="field.properties['readonly'] === 'readonly'"   class="form-control" name={{field.id}} [(ngModel)]="field.defaultValue"  *ngIf="field.type.name=='enum' && field.properties['multiselect']===undefined">
                       <option *ngFor="let option of enumSingleSelectValues[field.id]" value = {{option}}>
                         {{field.type.values[option]}}
                       </option>

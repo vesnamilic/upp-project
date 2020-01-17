@@ -28,6 +28,7 @@ public class ValidateUserRegistrationData implements JavaDelegate {
 	public void execute(DelegateExecution execution) throws Exception {
 		List<FormSubmitDTO> list = (List<FormSubmitDTO>) execution.getVariable("data");
 		HashMap<String, Object> map = this.mapListToDto(list);
+
 		
 		if (userCustomService.findUser((String)map.get("username")) != null) {
 			execution.setVariable("validationSuccessful", false);
@@ -40,6 +41,12 @@ public class ValidateUserRegistrationData implements JavaDelegate {
 		}
 		
 		List<Map<String,String>> scientificAreas = (List<Map<String,String>>) map.get("scientificAreas");
+		
+		if (scientificAreas.size() < 1) {
+			execution.setVariable("validationSuccessful", false);
+			return;
+		}
+		
 		for(Map<String, String> area : scientificAreas) {
 			if(this.scientificAreaService.findById(Long.parseLong(area.get("item_id"))) == null ) {
 				execution.setVariable("validationSuccessful", false);
