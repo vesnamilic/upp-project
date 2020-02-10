@@ -24,7 +24,7 @@ export class RegistrationComponent implements OnInit {
   success = false;
 
   constructor(private registrationService: RegistrationService, private taskService: TaskService) {
-    this.taskService.startProcess('registration').subscribe(
+    this.registrationService.startProcess().subscribe(
       data => {
         console.log(data);
         this.initFields(data);

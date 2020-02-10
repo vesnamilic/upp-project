@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import upp.project.dto.FormSubmitDTO;
 import upp.project.model.Magazine;
 import upp.project.model.RegisteredUser;
-import upp.project.model.ScientificArea;
 
 @Service
 public class SavingReviewersMagazineEditors implements JavaDelegate {

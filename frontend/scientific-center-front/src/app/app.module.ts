@@ -15,6 +15,18 @@ import { MagazineFormComponent } from './magazine-form/magazine-form.component';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { HomeComponent } from './home/home.component';
+import { ArticleComponent } from './article/article.component';
+import { TaskListComponent } from './task-list/task-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { UserFormComponent } from './user-form/user-form.component';
+import { SuccessComponent } from './success/success.component';
+import { ErrorComponent } from './error/error.component';
+import { FailedComponent } from './failed/failed.component';
+import { AllMagazinesComponent } from './all-magazines/all-magazines.component';
+import { MagazineComponent } from './magazine/magazine.component';
+import { IssueComponent } from './issue/issue.component';
 
 @NgModule({
    declarations: [
@@ -27,14 +39,26 @@ import { HomeComponent } from './home/home.component';
       MagazineFormComponent,
       DynamicFormComponent,
       UnauthorizedComponent,
-      HomeComponent
+      HomeComponent,
+      ArticleComponent,
+      TaskListComponent,
+      UserFormComponent,
+      SuccessComponent,
+      ErrorComponent,
+      FailedComponent,
+      AllMagazinesComponent,
+      MagazineComponent,
+      IssueComponent
    ],
    imports: [
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
       FormsModule,
-      NgMultiSelectDropDownModule.forRoot()
+      NgMultiSelectDropDownModule.forRoot(),
+      BrowserAnimationsModule,
+      MatTabsModule,
+      AngularFontAwesomeModule
    ],
    providers: [
       httpInterceptorProviders

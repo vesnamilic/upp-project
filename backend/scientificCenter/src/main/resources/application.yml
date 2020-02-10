@@ -2,7 +2,7 @@ jwtSecret: jwtSecretKeyV2
 registrationProcessId: registrationProcessId
 
 camunda.bpm.admin-user:
-  id: vesnamilic
+  id: admin
   password: admin
 
 spring:
@@ -34,4 +34,15 @@ spring:
           starttls:
             enable : true
  
+server:
+  port: 8080
+  ssl:
+    enabled: true
+    key-store: classpath:scientific_center_keyStore.jks
+    key-store-password: password
+    key-alias: scientific-center
+    key-store-type: JKS
+    trust-store: classpath:scientific_center_trustedStore.jks
+    trust-store-password: password
+    trust-store-type: JKS
   

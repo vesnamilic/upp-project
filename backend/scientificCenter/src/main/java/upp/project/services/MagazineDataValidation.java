@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,16 @@ public class MagazineDataValidation implements JavaDelegate {
 			return;
 		}
 
+		if (!isValidEmailAddress((String) map.get("email"))) {
+			execution.setVariable("validationSuccessful", false);
+			return;
+		}
+
+		if ((Integer) map.get("price") <= 0) {
+			execution.setVariable("validationSuccessful", false);
+			return;
+		}
+
 		for (Map<String, String> area : scientificAreas) {
 			if (this.scientificAreaService.findById(Long.parseLong(area.get("item_id"))) == null) {
 				execution.setVariable("validationSuccessful", false);
@@ -45,6 +58,17 @@ public class MagazineDataValidation implements JavaDelegate {
 		}
 
 		return map;
+	}
+
+	private boolean isValidEmailAddress(String email) {
+		boolean result = true;
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+		} catch (AddressException ex) {
+			result = false;
+		}
+		return result;
 	}
 
 }

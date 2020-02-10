@@ -6,16 +6,20 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MagazineService {
 
-magazineService = 'http://localhost:8080/magazine/';
+  magazineService = 'https://localhost:8080/magazine/';
 
-constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-public createMagazine(magazineDTO, taskId) {
-  return this.httpClient.post<any>(this.magazineService + 'create/' + taskId, magazineDTO);
-}
+  public createMagazine(magazineDTO, taskId) {
+    return this.httpClient.post<any>(this.magazineService + 'create/' + taskId, magazineDTO);
+  }
 
-startProcess(processName: String) {
-  return this.httpClient.get<any>(this.magazineService + 'startProcess');
-}
+  startProcess(processName: String) {
+    return this.httpClient.get<any>(this.magazineService + 'startProcess');
+  }
+
+  public getAllMagazines() {
+    return this.httpClient.get<any>(this.magazineService + 'all');
+  }
 
 }

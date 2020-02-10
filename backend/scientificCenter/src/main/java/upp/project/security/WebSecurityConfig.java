@@ -1,5 +1,6 @@
 package upp.project.security;
 
+import org.camunda.bpm.engine.IdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +33,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private EntryPoint jwtAuthenticationEntryPoint;
 
 	@Autowired
-	JwtProvider jwtProvider;
+	private JwtProvider jwtProvider;
+	
+	@Autowired
+	private IdentityService identityService;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -57,11 +61,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
 		.authorizeRequests().antMatchers(HttpMethod.GET, "/", "/auth/**", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
-						"/**/*.css", "/**/*.js").permitAll()
+						"/**/*.css", "/**/*.js","/**/*.pdf").permitAll()
 		.antMatchers("/auth/**").permitAll()
 		.antMatchers("/tasks/**").permitAll()
 		.anyRequest().permitAll().and()
-		.addFilterBefore(new AuthenticationTokenFilter(jwtProvider, userCustomService),BasicAuthenticationFilter.class).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		.addFilterBefore(new AuthenticationTokenFilter(jwtProvider, userCustomService, identityService),BasicAuthenticationFilter.class).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		
 		http.csrf().disable();
@@ -87,7 +91,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/favicon.ico",
                 "/**/*.html",
                 "/**/*.css",
-                "/**/*.js"
+                "/**/*.js",
+                "/**/*.pdf"
             );
 
     }

@@ -1,0 +1,11 @@
+<header class="masthead">
+  <div class="container h-100">=
+      <div class="col-12 text-center">
+        <h1 class="font-weight-light">Magazine List</h1>
+        <hr>
+        <div class="mt-4" *ngFor="let item of allMagazines" >
+            <app-magazine [magazine]="item"></app-magazine>
+        </div>
+      </div>
+  </div>
+</header>

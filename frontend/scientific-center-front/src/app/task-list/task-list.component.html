@@ -1,0 +1,23 @@
+<div class="main container">
+  <h3>Task List</h3>
+  <hr>
+  <table class="table table-striped">
+      <thead class="thead-dark">
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">NAME</th>
+              <th scope="col">ASSIGNEE</th>
+              <th scope="col"></th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let task of tasks">
+              <td>{{task.taskId}}</td>
+              <td>{{task.name}}</td>
+              <td>{{task.assignee}}</td>
+              <td><button class="btn btn-dark" (click)="getTask(task.taskId)" >Details</button></td>
+          </tr>
+      </tbody>
+  </table>
+
+</div>

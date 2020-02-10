@@ -1,23 +1,83 @@
-<div class="main container">
-    <h3>Task List</h3>
-    <hr>
-    <table class="table table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">NAME</th>
-                <th scope="col">ASSIGNEE</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let task of tasks">
-                <td>{{task.taskId}}</td>
-                <td>{{task.name}}</td>
-                <td>{{task.assignee}}</td>
-                <td><button class="btn btn-dark" (click)="getTask(task.taskId)" >Details</button></td>
-            </tr>
-        </tbody>
-    </table>
+<div class="ml-3">
+    <mat-tab-group class="mt-1" mat-align-tabs="center" animationDuration="0ms">
+        <mat-tab label="Users">
+            <div class="ml-3">
+                <h3 class="title">Users list</h3>
+                <hr>
+                <div>
+                    <a routerLink="/register-editors" class="btn btn-secondary">Add New User</a>
+                </div>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">USERNAME</th>
+                            <th scope="col">FIRST NAME</th>
+                            <th scope="col">LAST NAME</th>
+                            <th scope="col">EMAIL ADDRESS</th>
+                            <th scope="col">ROLES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users">
+                            <td>{{user.username}}</td>
+                            <td>{{user.firstName}}</td>
+                            <td>{{user.lastName}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.roles}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </mat-tab>
 
+        <mat-tab label="Groups">
+            <div class="ml-3 row">
+                <div class="col">
+                    <h3 class="title">Groups list</h3>
+                    <hr>
+                    <button class="btn btn-secondary">Add New Group</button>
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">NAME</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let group of groups">
+                                <td>{{group.id}}</td>
+                                <td>{{group.name}}</td>
+                                <td><button class="btn btn-secondary" type="button" (click)="seeGroupMemebers(group.id)">See Members</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col" *ngIf="showMembers" >
+                  <h3 class="title">Members</h3>
+                  <hr>
+                  <div class="members">
+                    <table class="table table-striped">
+                      <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">USERNAME</th>
+                            <th scope="col">FIRST NAME</th>
+                            <th scope="col">LAST NAME</th>
+                            <th scope="col">EMAIL</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let member of members">
+                            <td>{{member.id}}</td>
+                            <td>{{member.firstName}}</td>
+                            <td>{{member.lastName}}</td>
+                            <td>{{member.email}}</td>
+                        </tr>
+                      </tbody>
+                  </table>
+                </div>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
 </div>

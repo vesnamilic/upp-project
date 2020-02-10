@@ -94,7 +94,7 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1k55cno" sourceRef="ExclusiveGateway_0ipp6ru" targetRef="EndEvent_1t3zbnf" />
     <bpmn:sequenceFlow id="SequenceFlow_1triz6o" sourceRef="Task_1e9w0zz" targetRef="ExclusiveGateway_1xrr1ef" />
-    <bpmn:userTask id="Task_1e9w0zz" name="Approve Reviewer " camunda:assignee="vesnamilic">
+    <bpmn:userTask id="Task_1e9w0zz" name="Approve Reviewer " camunda:candidateGroups="admin">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="administratorApproval" label="Confirm user ${username} as a reviewer" type="boolean" defaultValue="${false}" />

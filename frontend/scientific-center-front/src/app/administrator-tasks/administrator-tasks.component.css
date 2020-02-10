@@ -1,10 +1,18 @@
 div.main {
     margin-top: 2rem;
 }
-.container {
-    margin-left: 1em;
-}
+
 .table {
-    margin-top: 2em;
     width: 80%;
+    margin-top: 1rem;;
+}
+
+.title {
+    font-weight: 300;
+    margin-bottom: 1rem;
+    margin-top: 5rem;
+}
+
+.members {
+    margin-top: 4.2rem;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../services/task.service';
 import { Router } from '@angular/router';
-
+import { UsersService } from '../services/users.service';
 @Component({
   selector: 'app-administrator-tasks',
   templateUrl: './administrator-tasks.component.html',
@@ -9,27 +9,53 @@ import { Router } from '@angular/router';
 })
 export class AdministratorTasksComponent implements OnInit {
 
-  tasks = [];
+  groups = [];
+  users = [];
+  showMembers = false;
+  members = [];
 
-  constructor(private router: Router, private taskService: TaskService) { }
+  constructor(private router: Router, private userService: UsersService) { }
 
   ngOnInit() {
-    this.taskService.getAllTasks().subscribe(
+    this.getGroups();
+    this.getUsers();
+  }
+
+  getGroups() {
+    this.userService.getGroups().subscribe(
       data => {
-        this.tasks = data;
+        this.groups = data;
         console.log(data);
       },
-      errors => {
-        console.log(errors);
-        if (errors.status === 401) {
-          this.router.navigateByUrl('/unauthorized');
-        }
+      erros => {
+        console.log(erros);
       }
     );
   }
 
-  getTask(taskId: String) {
-    this.router.navigateByUrl('/tasks/' + taskId);
+  getUsers() {
+    this.userService.getUsers().subscribe(
+      data => {
+        this.users = data;
+        console.log(data);
+      },
+      erros => {
+        console.log(erros);
+      }
+    );
+  }
+
+  seeGroupMemebers(groupId: string) {
+    this.userService.getGroupMembers(groupId).subscribe(
+      data => {
+        this.showMembers = true;
+        this.members = data;
+        console.log(data);
+      },
+      erros => {
+        console.log(erros);
+      }
+    );
   }
 
 }

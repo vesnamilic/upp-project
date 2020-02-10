@@ -1,5 +1,6 @@
 package upp.project.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -48,7 +49,7 @@ public class UserCustomService implements UserDetailsService, JavaDelegate {
 	private JwtProvider jwtProvider;
 
 	@Autowired
-	private JavaMailSender javaMailSender;
+	private EmailService emailService;
 	
 	@Autowired
 	private ScientificAreaService scientificAreaService;
@@ -56,7 +57,6 @@ public class UserCustomService implements UserDetailsService, JavaDelegate {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		System.out.println("VEKICA");
 		RegisteredUser user = userRepository.findByUsername(username).orElseThrow(
 				() -> new UsernameNotFoundException("User Not Found with -> username or email : " + username));
 		return user;
@@ -71,6 +71,10 @@ public class UserCustomService implements UserDetailsService, JavaDelegate {
 		return null;
 	}
 
+	public List<RegisteredUser> findAllUsers() {
+		return this.userRepository.findByDeletedAndEnabled(false, true);
+	}
+	
 	public RegisteredUser save(RegisteredUser user) {
 		RegisteredUser savedUser = null;
 
@@ -98,6 +102,32 @@ public class UserCustomService implements UserDetailsService, JavaDelegate {
 	public List<RegisteredUser> findByScientificAreasAndRole(List<ScientificArea> areas, Authority auth) {
 		return this.userRepository.findByScientificAreasAndRole(areas, auth);
 	}
+	
+	public RegisteredUser findScientificEditor(ScientificArea scientificArea, Long magazineId) {
+		List<RegisteredUser> editors = this.userRepository.findScientificEditor(scientificArea, magazineId);
+		
+		if(editors != null) {
+			return (editors.size() > 0)? editors.get(0) : null;
+		}
+		
+		return null;
+	}
+	
+	public List<RegisteredUser> findReviewersByScientificAreas(ScientificArea scientificArea, Long magazineId) {
+		List<RegisteredUser> reviewers = this.userRepository.findReviewerByScientificAreas(scientificArea, magazineId);
+		
+		if(reviewers != null) {
+			return reviewers;
+		}
+		
+		return new ArrayList<RegisteredUser>();
+		
+	}
+	
+	public RegisteredUser getOne(Long id) {
+		return this.userRepository.getOne(id);
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -137,10 +167,18 @@ public class UserCustomService implements UserDetailsService, JavaDelegate {
 			camundaUser.setLastName(user.getLastName());
 			camundaUser.setPassword(user.getPassword());
 			identityService.saveUser(camundaUser);
+			identityService.createMembership(user.getUsername(), "users");
 		}
 
+		String text = "Poštovani korisniče, \n\nMolimo vas da potvrdite svoju registraciju kako biste mogli da koristite naše usluge: \n"
+				+ "Potvrda registracije se vrši klikom da dati link: "
+				+ "https://localhost:8080/auth/confirmRegistration?token="
+				+ jwtProvider.generateJwtTokenRegistration((String) execution.getVariable("username"),
+						execution.getProcessInstanceId(), 24)
+				+ "\nS poštovanjem, \nNaucna centrala";
+		
 		try {
-			this.sendNotificaitionAsync(execution);
+			this.emailService.sendNotificaitionAsync(user.getEmail(), "Registracija", text);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -158,21 +196,4 @@ public class UserCustomService implements UserDetailsService, JavaDelegate {
 		return map;
 	}
 	
-
-	public void sendNotificaitionAsync(DelegateExecution execution) throws MailException, InterruptedException {
-		SimpleMailMessage mail = new SimpleMailMessage();
-		mail.setTo((String) execution.getVariable("email"));
-		mail.setFrom("timisaprojekat@gmail.com");
-		mail.setSubject("Potvrda registracije korisnika");
-		System.out.println(jwtProvider);
-
-		mail.setText(
-				"Poštovani korisniče, \n\nMolimo vas da potvrdite svoju registraciju kako biste mogli da koristite naše usluge: \n"
-						+ "Potvrda registracije se vrši klikom da dati link: "
-						+ "http://localhost:8080/auth/confirmRegistration?token="
-						+ jwtProvider.generateJwtTokenRegistration((String) execution.getVariable("username"),
-								execution.getProcessInstanceId(), 24)
-						+ "\nS poštovanjem, \nNaucna centrala");
-		javaMailSender.send(mail);
-	}
 }

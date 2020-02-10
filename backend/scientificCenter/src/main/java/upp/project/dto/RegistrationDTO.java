@@ -18,16 +18,21 @@ public class RegistrationDTO {
 	@NotNull
 	private String password;
 	
+	@NotNull
 	private String firstName;
 	
+	@NotNull
 	private String lastName;
 	
+	@NotNull
 	private String city;
 	
+	@NotNull
 	private String country;
 	
 	private String title;
 	
+	@NotNull
 	private String email;
 	
 	private boolean requestedReviewerRole;

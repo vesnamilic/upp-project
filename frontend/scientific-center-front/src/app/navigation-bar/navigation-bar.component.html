@@ -12,6 +12,12 @@
       <li [hidden]="!hasUser" class="nav-item">
         <a class="nav-link" routerLink="/tasks">Task list</a>
       </li>
+      <li [hidden]="!roles.includes('ROLE_REG_USER')" class="nav-item">
+        <a class="nav-link" routerLink="/scientific-paper">Add Scientific Paper</a>
+      </li>
+      <li [hidden]="!roles.includes('ROLE_ADMINISTRATOR')" class="nav-item">
+        <a class="nav-link" routerLink="/admin-pane">Admin pane</a>
+      </li>
       <li [hidden]="!roles.includes('ROLE_EDITOR')" class="nav-item">
         <a class="nav-link" routerLink="/magazine">Magazine</a>
       </li>

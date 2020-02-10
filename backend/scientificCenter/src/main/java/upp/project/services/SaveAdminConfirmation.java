@@ -2,6 +2,7 @@ package upp.project.services;
 
 import java.util.Set;
 
+import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class SaveAdminConfirmation implements JavaDelegate {
 
 	@Autowired
 	private AuthorityService authorityService;
+	
+	@Autowired
+	private IdentityService identityService;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -33,6 +37,7 @@ public class SaveAdminConfirmation implements JavaDelegate {
 				Set<Authority> authorities = (Set<Authority>) user.getAuthorities();
 				authorities.add(authority);
 				this.userCustomService.save(user);
+				identityService.createMembership(user.getUsername(), "reviewers");
 			}
 		}
 

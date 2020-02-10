@@ -6,21 +6,24 @@
           <div class="container">
             <div class="row">
               <div *ngIf="!processFinished" class="col-md-9 col-lg-8 mx-auto">
-                <h3 class="login-heading mb-4">Task Details</h3>
+                <h3 class="login-heading mb-4">{{title}}</h3>
                 <form class="form-class" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit(f)" ngNativeValidate>
-                    <div  class="form-label-group" *ngFor="let field of formFields" >
-                        <label class="form-control-label" *ngIf="field.properties['multiselect']===undefined" for={{field.id}}>{{field.label}}</label>
-                        <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'" class="form-control" type="text" name={{field.id}} [(ngModel)]="field.defaultValue"   *ngIf="field.type.name=='string' && field.id !=='email' && field.id !=='password'" >
-                        <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'" class="form-control" type="email" name={{field.id}} [(ngModel)]="field.defaultValue"   *ngIf="field.type.name=='string' && field.id =='email'" >
-                        <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'" class="form-control" type="password" name={{field.id}} [(ngModel)]="field.defaultValue"   *ngIf="field.type.name=='string' && field.id =='password'" >
-                        <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'"   type="checkbox" name={{field.id}} [(ngModel)]="field.defaultValue" *ngIf="field.type.name=='boolean'">
-                        <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'"  class="form-control" type="number" name={{field.id}} [(ngModel)]="field.defaultValue" *ngIf="field.type.name=='long'">
-                        <select [required]="field.properties['required'] == 'required'" [disabled]="field.properties['readonly'] === 'readonly'"   class="form-control" name={{field.id}} [(ngModel)]="field.defaultValue"  *ngIf="field.type.name=='enum' && field.properties['multiselect']===undefined">
-                            <option *ngFor="let option of enumSingleSelectValues[field.id]" value = {{option}}>
-                              {{field.type.values[option]}}
-                            </option>
-                        </select>
-                      </div>
+                  <div  class="form-label-group" *ngFor="let field of formFields" >
+                    <label class="form-control-label" *ngIf="field.properties['multiselect']===undefined" for={{field.id}}>{{field.label}}</label>
+                    <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'" class="form-control" type="text" name={{field.id}} [(ngModel)]="field.defaultValue"   *ngIf="field.type.name=='string' && field.id !=='email' && field.properties['file']===undefined && field.properties['textarea']===undefined && field.id !=='password'"   >
+                    <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'" class="form-control" type="email" name={{field.id}} [(ngModel)]="field.defaultValue"   *ngIf="field.type.name=='string' && field.id =='email'" >
+                    <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'" class="form-control" type="password" name={{field.id}} [(ngModel)]="field.defaultValue"   *ngIf="field.type.name=='string' && field.id =='password'" >
+                    <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'"   type="checkbox" name={{field.id}} [(ngModel)]="field.defaultValue" *ngIf="field.type.name=='boolean'">
+                    <input [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'"  class="form-control" type="number" name={{field.id}} [(ngModel)]="field.defaultValue" *ngIf="field.type.name=='long'">
+                    <textarea [required]="field.properties['required'] == 'required'" [readonly]="field.properties['readonly'] === 'readonly'" class="form-control"  name={{field.id}} [(ngModel)]="field.defaultValue" *ngIf="field.type.name=='string' && field.properties['textarea']!==undefined" ></textarea>
+                    <select [required]="field.properties['required'] == 'required'" [disabled]="field.properties['readonly'] === 'readonly'"   class="form-control" name={{field.id}} [(ngModel)]="field.defaultValue"  *ngIf="field.type.name=='enum' && field.properties['multiselect']===undefined">
+                        <option *ngFor="let option of enumSingleSelectValues[field.id]" value = {{option}}>
+                          {{field.type.values[option]}}
+                        </option>
+                    </select>
+                    <input [required]="field.properties['required'] == 'required'" class="form-control" type="file" name={{field.id}} [(ngModel)]="field.defaultValue"   *ngIf="field.type.name=='string' && field.properties['file']!==undefined && field.properties['readonly']==undefined" (change)="selectFile($event)">
+                    <a class="ml-3 btn btn-secondary" name={{field.id}}  *ngIf="field.type.name=='string' && field.properties['file']!==undefined && field.properties['readonly']!==undefined " href={{field.defaultValue}}><i class="fa fa-download" aria-hidden="true"></i>  Download Paper</a>
+                  </div>
                   <div class="form-label-group" *ngFor="let enum of dropdownList;  index as i">
                     <label class="form-control-label" for={{enumNames[i]}}>{{enumLabels[i]}}</label>
                     <ng-multiselect-dropdown  [name]="enumNames[i]" [data]="enum" [(ngModel)]="selectedItems[i]" [settings]="dropdownSettings"></ng-multiselect-dropdown>

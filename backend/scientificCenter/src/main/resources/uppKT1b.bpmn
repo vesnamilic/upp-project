@@ -40,6 +40,23 @@
             </camunda:properties>
             <camunda:value id="none" name="----" />
           </camunda:formField>
+          <camunda:formField id="email" label="Email" type="string">
+            <camunda:properties>
+              <camunda:property id="required" value="required" />
+              <camunda:property id="email" value="email" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="price" label="Price" type="long">
+            <camunda:properties>
+              <camunda:property id="required" value="required" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
         <camunda:taskListener delegateExpression="${createRegistrationFormListener}" event="create" />
       </bpmn:extensionElements>
@@ -81,7 +98,7 @@
       <bpmn:incoming>SequenceFlow_0zf9vvs</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0r4rasy" sourceRef="Task_1xsb7z0" targetRef="ExclusiveGateway_0iln0c1" />
-    <bpmn:userTask id="Task_1xsb7z0" name="Review Input Data" camunda:assignee="vesnamilic">
+    <bpmn:userTask id="Task_1xsb7z0" name="Review Input Data" camunda:candidateGroups="admin">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="name" label="Magazine Name" type="string" defaultValue="${name}">
@@ -95,6 +112,16 @@
             </camunda:properties>
           </camunda:formField>
           <camunda:formField id="paymentMethod" label="Payment Method" type="string" defaultValue="${paymentMethod}">
+            <camunda:properties>
+              <camunda:property id="readonly" value="readonly" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="email" label="Email" type="string" defaultValue="${email}">
+            <camunda:properties>
+              <camunda:property id="readonly" value="readonly" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="price" label="Price" type="long" defaultValue="${price}">
             <camunda:properties>
               <camunda:property id="readonly" value="readonly" />
             </camunda:properties>
@@ -143,6 +170,23 @@
             </camunda:validation>
             <camunda:value id="authors" name="Authors" />
             <camunda:value id="readers" name="Readers" />
+          </camunda:formField>
+          <camunda:formField id="email" label="Emal" type="string" defaultValue="${email}">
+            <camunda:properties>
+              <camunda:property id="required" value="required" />
+              <camunda:property id="email" value="email" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="price" label="Price" type="long" defaultValue="${price}">
+            <camunda:properties>
+              <camunda:property id="required" value="required" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
           </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
@@ -260,7 +304,7 @@
         <dc:Bounds x="1600" y="177" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_01vnsi0_di" bpmnElement="SequenceFlow_01vnsi0">
-        <di:waypoint x="1960" y="310" />
+        <di:waypoint x="1950" y="310" />
         <di:waypoint x="2020" y="310" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_0iln0c1_di" bpmnElement="ExclusiveGateway_0iln0c1" isMarkerVisible="true">
@@ -272,7 +316,7 @@
       <bpmndi:BPMNEdge id="SequenceFlow_1fosxqj_di" bpmnElement="SequenceFlow_1fosxqj">
         <di:waypoint x="1780" y="242" />
         <di:waypoint x="1780" y="310" />
-        <di:waypoint x="1860" y="310" />
+        <di:waypoint x="1850" y="310" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1788" y="273" width="15" height="14" />
         </bpmndi:BPMNLabel>
@@ -285,7 +329,7 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_0x8dhit_di" bpmnElement="Task_0w58243">
-        <dc:Bounds x="1860" y="270" width="100" height="80" />
+        <dc:Bounds x="1850" y="270" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0zf9vvs_di" bpmnElement="SequenceFlow_0zf9vvs">
         <di:waypoint x="1950" y="217" />

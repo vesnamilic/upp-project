@@ -6,13 +6,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TaskService {
 
-  taskUrl = 'http://localhost:8080/tasks/';
+  taskUrl = 'https://localhost:8080/tasks/';
 
   constructor(private httpClient: HttpClient) { }
-
-  startProcess(processName: String) {
-    return this.httpClient.get<any>(this.taskUrl + 'startProcess?processName=' + processName);
-  }
 
   getAllTasks() {
     return this.httpClient.get<any>(this.taskUrl + 'getTasks/');

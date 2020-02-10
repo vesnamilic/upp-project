@@ -16,6 +16,8 @@ import upp.project.model.ScientificArea;
 public interface RegisteredUserRepository extends JpaRepository<RegisteredUser,Long> {
 	
 	Optional<RegisteredUser> findByUsername(String username);
+	
+	List<RegisteredUser> findByDeletedAndEnabled(Boolean deleted, Boolean enabled);
 		
 	Boolean existsByUsername(String username);
 	
@@ -26,4 +28,12 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser,L
 			+ " us.deleted = false")
 	List<RegisteredUser> findByScientificAreasAndRole(List<ScientificArea> scientificAreas, Authority authority);
 
+	
+	@Query("SELECT distinct editors from Magazine as magazine inner join magazine.editors as editors inner join editors.scientificAreas as scientificAreas "
+			+ "WHERE ?1 in scientificAreas and magazine.deleted = false and magazine.approved = true and magazine.id = ?2 ")
+	List<RegisteredUser> findScientificEditor(ScientificArea scientificArea, Long magazineId);
+	
+	@Query("SELECT distinct reviewers from Magazine as magazine inner join magazine.reviewers as reviewers inner join reviewers.scientificAreas as scientificAreas "
+			+ "WHERE ?1 in scientificAreas and magazine.deleted = false and magazine.approved = true and magazine.id = ?2 ")
+	List<RegisteredUser> findReviewerByScientificAreas(ScientificArea scientificArea, Long magazineId);
 }

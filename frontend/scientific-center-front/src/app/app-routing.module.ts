@@ -8,6 +8,15 @@ import { UserConfirmationFormComponent } from './user-confirmation-form/user-con
 import { MagazineFormComponent } from './magazine-form/magazine-form.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { HomeComponent } from './home/home.component';
+import { TaskListComponent } from './task-list/task-list.component';
+import { ScientificPaperService } from './services/scientific-paper.service';
+import { ArticleComponent } from './article/article.component';
+import { UserFormComponent } from './user-form/user-form.component';
+import { ErrorComponent } from './error/error.component';
+import { SuccessComponent } from './success/success.component';
+import { FailedComponent } from './failed/failed.component';
+import { MagazineComponent } from './magazine/magazine.component';
+import { AllMagazinesComponent } from './all-magazines/all-magazines.component';
 
 const routes: Routes = [
   {
@@ -24,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'tasks',
-    component: AdministratorTasksComponent
+    component: TaskListComponent
   },
   {
     path: 'tasks/:id',
@@ -35,9 +44,43 @@ const routes: Routes = [
     component: MagazineFormComponent
   },
   {
+    path: 'single-magazine',
+    component: MagazineComponent
+  },
+  {
+    path: 'all-magazines',
+    component: AllMagazinesComponent
+  },
+  {
+    path: 'admin-pane',
+    component: AdministratorTasksComponent
+  },
+  {
+    path: 'scientific-paper',
+    component: ArticleComponent
+  }
+  ,
+  {
+    path: 'register-editors',
+    component: UserFormComponent
+  },
+  {
     path: 'unauthorized',
     component: UnauthorizedComponent
+  },
+  {
+    path: 'error',
+    component: ErrorComponent
+  },
+  {
+    path: 'success',
+    component: SuccessComponent
+  },
+  {
+    path: 'failed',
+    component: FailedComponent
   }
+
 ];
 
 @NgModule({

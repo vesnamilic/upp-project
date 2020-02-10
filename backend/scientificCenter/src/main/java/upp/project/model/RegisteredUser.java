@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
@@ -76,6 +77,9 @@ public class RegisteredUser implements UserDetails {
 	@Column(name = "deleted")
 	private boolean deleted;
 
+	@OneToMany
+	private Set<Membership> memberships;
+	
 	@ManyToMany
 	private Set<ScientificArea> scientificAreas;
 
@@ -87,6 +91,7 @@ public class RegisteredUser implements UserDetails {
 		// TODO Auto-generated constructor stub
 		super();
 		this.authorities = new HashSet<Authority>();
+		this.memberships = new HashSet<Membership>();
 		this.scientificAreas = new HashSet<ScientificArea>();
 		Timestamp now = new Timestamp(DateTime.now().getMillis());
 		this.lastPasswordResetDate = now;

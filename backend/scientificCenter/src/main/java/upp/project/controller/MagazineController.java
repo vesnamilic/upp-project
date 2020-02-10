@@ -1,15 +1,15 @@
 package upp.project.controller;
 
-import java.security.Principal;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.stream.Collectors;
 
 import org.camunda.bpm.engine.FormService;
+import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.form.FormField;
 import org.camunda.bpm.engine.form.TaskFormData;
+import org.camunda.bpm.engine.identity.Group;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import upp.project.dto.FormFieldsDTO;
-import upp.project.security.JwtProvider;
+import upp.project.services.MagazineService;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -39,17 +39,40 @@ public class MagazineController {
 	private FormService formService;
 	
 	@Autowired
-	private JwtProvider jwtProvider;
+	private IdentityService identityService;
+	
+	@Autowired
+	private MagazineService magazineService;
+	
 	
 	@PreAuthorize("hasRole('ROLE_EDITOR')")
 	@GetMapping(path = "/startProcess", produces = "application/json")
-	public ResponseEntity<?> startRegistrationProcess(HttpServletRequest request, Principal principal) {
-		ProcessInstance pi = runtimeService.startProcessInstanceByKey("magazine_creation");
-		Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
-		TaskFormData taskFormData = formService.getTaskFormData(task.getId());
-		List<FormField> formFieldsList = taskFormData.getFormFields();
-		runtimeService.setVariable(pi.getId(), "currentUser", this.jwtProvider.getUsername(this.jwtProvider.getToken(request)));
-		return ResponseEntity.ok(new FormFieldsDTO(task.getId(), formFieldsList, pi.getId()));
+	public ResponseEntity<?> startProcess() {
+		
+		String username = this.identityService.getCurrentAuthentication().getUserId();
+		
+		if(username!=null) {
+			
+			List<Group> groups = this.identityService.createGroupQuery().groupMember(username).list();
+			List<String> userIds = groups.stream().map(Group::getId).collect(Collectors.toList());
+			
+			if(userIds.contains("editors")) {
+				ProcessInstance pi = runtimeService.startProcessInstanceByKey("magazine_creation");
+				Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
+				TaskFormData taskFormData = formService.getTaskFormData(task.getId());
+				List<FormField> formFieldsList = taskFormData.getFormFields();
+				return ResponseEntity.ok(new FormFieldsDTO(task.getId(),task.getName(), formFieldsList, pi.getId()));
+			}
+		}
+		
+		return ResponseEntity.status(401).build();
+		
+		
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<?> getAll(){
+		return ResponseEntity.ok(this.magazineService.findAllActivated());
 	}
 	
 }

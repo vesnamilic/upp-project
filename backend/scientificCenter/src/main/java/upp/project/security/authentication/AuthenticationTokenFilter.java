@@ -1,12 +1,18 @@
 package upp.project.security.authentication;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.camunda.bpm.engine.IdentityService;
+import org.camunda.bpm.engine.identity.Group;
+import org.camunda.bpm.engine.impl.identity.Authentication;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,10 +30,14 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
 	private UserDetailsService userDetailsService;
 
-	public AuthenticationTokenFilter(JwtProvider jwtProvider, UserDetailsService userDetailsService) {
+	private IdentityService identityService;
+
+	public AuthenticationTokenFilter(JwtProvider jwtProvider, UserDetailsService userDetailsService,
+			IdentityService identityService) {
 		super();
 		this.jwtProvider = jwtProvider;
 		this.userDetailsService = userDetailsService;
+		this.identityService = identityService;
 	}
 
 	@Override
@@ -47,10 +57,17 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 			username = jwtProvider.getUsername(authenticationToken);
 
 			if (username != null) {
-				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+				UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 				if (jwtProvider.validateToken(authenticationToken, userDetails)) {
-					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-					usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+					List<Group> groups = this.identityService.createGroupQuery().groupMember(username).list();
+					List<String> userIds = groups.stream().map(Group::getId).collect(Collectors.toList());
+					Authentication auth = new Authentication(username, userIds);
+					this.identityService.setAuthentication(auth);
+					this.identityService.setAuthenticatedUserId(username);
+					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+							userDetails, null, userDetails.getAuthorities());
+					usernamePasswordAuthenticationToken
+							.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					// After setting the Authentication in the context, we specify
 					// that the current user is authenticated. So it passes the
 					// Spring Security Configurations successfully.
@@ -61,14 +78,24 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 		}
 
 		if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+
 			response.setStatus(HttpServletResponse.SC_OK);
 		} else {
+
+			if (identityService.getCurrentAuthentication() == null) {
+				List<String> userIds = new ArrayList<>();
+				userIds.add("guests");
+				Authentication auth = new Authentication("guest", userIds);
+				this.identityService.setAuthenticatedUserId("guest");
+				this.identityService.setAuthentication(auth);
+				response.setStatus(HttpServletResponse.SC_OK);
+			}
 			try {
 				filterChain.doFilter(request, response);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				// response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			}
+
 		}
 
 	}

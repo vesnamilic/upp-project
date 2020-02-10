@@ -27,12 +27,18 @@ public class Magazine {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	@Column(name = "email", nullable = false)
+	private String email;
 
 	@Column(name = "name", nullable = false)
 	private String name;
 
 	@Column(name = "ISSSN", nullable = false)
 	private String ISSSN;
+	
+	@Column(name = "price", nullable = false)
+	private Integer price;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "paymentMethod", nullable = false)

@@ -25,7 +25,7 @@ public class JwtProvider {
 	
 	private int jwtExpiration = 36000;
 
-	@Value("${jwtSecret}")
+	@Value("${jwtSecret: sep}")
 	private String jwtSecret;
 	
 	@Value("Authorization")

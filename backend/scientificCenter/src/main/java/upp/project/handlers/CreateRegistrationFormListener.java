@@ -26,9 +26,7 @@ public class CreateRegistrationFormListener implements TaskListener {
 		List<ScientificArea> scientificAreas = this.scientificAreasRepository.findAll();
 		List<FormField> formFields = taskFormData.getFormFields();
 		if (formFields != null) {
-
 			for (FormField field : formFields) {
-				System.out.println(field.getId());
 				if (field.getId().equals("scientificAreas")) {
 					// ovo je nase select polje
 					HashMap<String, String> items = (HashMap<String, String>) field.getType().getInformation("values");

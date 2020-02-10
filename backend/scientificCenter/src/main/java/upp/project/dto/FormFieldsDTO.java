@@ -16,6 +16,7 @@ import lombok.Setter;
 public class FormFieldsDTO {
 
 	private String taskId;
+	private String taskName;
 	private List<FormField> formFields;
 	private String processInstanceId;
 }
