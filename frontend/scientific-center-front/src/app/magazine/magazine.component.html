@@ -3,8 +3,9 @@
     <mat-card-title>
       <h3 class="mb-3"> {{magazine.name}}
         <span *ngIf="magazine.paymentMethod === 'READERS'"  style="float: right;">
-          <button (click)="subscribe()" class="btn btn-secondary badge badge-pill ml-2"><i class="fab fa-stripe-s"></i></button>
-          <button (click)="addToShoppingCart()"  class="btn btn-info badge badge-pill ml-2"><i class="fas fa-cart-arrow-down"></i></button>
+          {{magazine.subscriptionPrice}}$
+          <button (click)="subscribe()" class="btn btn-secondary badge badge-pill ml-1"><i class="fab fa-stripe-s"></i></button>
+          <button (click)="addToShoppingCart()"  class="btn btn-info badge badge-pill ml-1"><i class="fas fa-cart-arrow-down"></i></button>
         </span>
       </h3>
     </mat-card-title>

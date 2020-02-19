@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.hasUser = (this.tokenService.getToken() === null) ? false : true;
+    this.roles = (this.tokenService.getToken() === null) ? [] : this.tokenService.getAuthorities();
   }
 
 }

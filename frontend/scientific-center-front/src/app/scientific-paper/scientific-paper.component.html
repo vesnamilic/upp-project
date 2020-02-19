@@ -3,7 +3,8 @@
     <mat-card-title>
     <h3 class="mb-3">{{paper.title}}
       <span *ngIf="paymentPossible"  style="float: right;">
-        <button (click)="addToShoppingCart()"  class="btn btn-info badge badge-pill ml-2"><i class="fas fa-cart-arrow-down"></i></button>
+        {{paperPrice}}$
+        <button (click)="addToShoppingCart()"  class="btn btn-info badge badge-pill ml-3"><i class="fas fa-cart-arrow-down"></i></button>
       </span>
     </h3>
     </mat-card-title>

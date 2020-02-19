@@ -43,7 +43,7 @@ public class SavePricesAndRegister implements JavaDelegate {
 
 		this.magazineService.save(magazine);
 
-		String successUrl = "https://localhost:9992/magazine/registration/" + execution.getProcessInstanceId() + "/"
+		String successUrl = "https://localhost:9991/magazine/registration/" + execution.getProcessInstanceId() + "/"
 				+ magazine.getId();
 
 		RegistrationDTO registrationDTO = new RegistrationDTO(magazine.getEmail(), magazine.getName(), successUrl, "https://localhost:4205/");

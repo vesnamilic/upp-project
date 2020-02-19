@@ -9,6 +9,6 @@
     </div>
   </div>
 </header>
-<div *ngIf="hasUser && roles.includes('ROLE_REG_USER')"  class="mt-4">
+<div [hidden]="!roles.includes('ROLE_REG_USER')" class="mt-4">
   <app-all-magazines></app-all-magazines>
 </div>

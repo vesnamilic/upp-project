@@ -5,6 +5,7 @@
 
 .card {
     height: 300px;
+    width: 360px;
 }
 
 mat-card-actions{
