@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ScientificAreasServiceService {
 
-  authenticationService = 'https://localhost:8080/scientificAreas/';
+  authenticationService = 'https://localhost:9991/scientificAreas/';
 
   constructor(private httpClient: HttpClient) { }
 

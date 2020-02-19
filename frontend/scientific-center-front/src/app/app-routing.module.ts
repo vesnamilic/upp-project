@@ -17,6 +17,11 @@ import { SuccessComponent } from './success/success.component';
 import { FailedComponent } from './failed/failed.component';
 import { MagazineComponent } from './magazine/magazine.component';
 import { AllMagazinesComponent } from './all-magazines/all-magazines.component';
+import { AllIssuesComponent } from './all-issues/all-issues.component';
+import { AllScientificPapersComponent } from './all-scientific-papers/all-scientific-papers.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { PurchasedItemsComponent } from './purchased-items/purchased-items.component';
+import { MagazineIssuesEditorComponent } from './magazine-issues-editor/magazine-issues-editor.component';
 
 const routes: Routes = [
   {
@@ -42,10 +47,6 @@ const routes: Routes = [
   {
     path: 'magazine',
     component: MagazineFormComponent
-  },
-  {
-    path: 'single-magazine',
-    component: MagazineComponent
   },
   {
     path: 'all-magazines',
@@ -77,8 +78,24 @@ const routes: Routes = [
     component: SuccessComponent
   },
   {
-    path: 'failed',
+    path: 'cancel',
     component: FailedComponent
+  },
+  {
+    path: 'issues/:magazineId',
+    component: AllIssuesComponent
+  },
+  {
+    path: 'scientific-papers/:issueId',
+    component: AllScientificPapersComponent
+  },
+  {
+    path: 'shopping-cart',
+    component: ShoppingCartComponent
+  },
+  {
+    path: 'purchased-items',
+    component: PurchasedItemsComponent
   }
 
 ];

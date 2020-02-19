@@ -1,0 +1,26 @@
+<div>
+  <mat-card class="card">
+    <mat-card-title>
+    <h3 class="mb-3">{{paper.title}}
+      <span *ngIf="paymentPossible"  style="float: right;">
+        <button (click)="addToShoppingCart()"  class="btn btn-info badge badge-pill ml-2"><i class="fas fa-cart-arrow-down"></i></button>
+      </span>
+    </h3>
+    </mat-card-title>
+    <mat-card-subtitle>
+    <p>Author: {{paper.author.firstName}} {{paper.author.lastName}} </p>
+    <div *ngIf="paper.coauthors.length > 0">
+    Coauthors:
+      <div *ngFor="let item of paper.coauthors" >
+        {{item.firstName}} {{item.lastName}} 
+      </div>
+    </div>
+    </mat-card-subtitle>
+    <hr class="my-3">
+    <mat-card-content >
+      <p>Key words: {{paper.keywords}}</p>
+      <p>Abstract: {{paper.keywords}}</p>
+      <p>Scientific Area : {{paper.scientificArea.name}}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

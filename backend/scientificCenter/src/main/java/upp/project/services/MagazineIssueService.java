@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import upp.project.model.Magazine;
 import upp.project.model.MagazineIssue;
+import upp.project.model.RegisteredUser;
 import upp.project.repositories.MagazineIssueRepository;
 
 @Service
@@ -17,6 +18,10 @@ public class MagazineIssueService {
 
 	@Autowired
 	private MagazineIssueRepository magazineIssueRepository;
+	
+	public MagazineIssue getOne(Long id) {
+		return this.magazineIssueRepository.getOne(id);
+	}
 	
 	public void createInitialIssue(Magazine magazine, int number) {
 		MagazineIssue issue = new MagazineIssue();
@@ -29,6 +34,10 @@ public class MagazineIssueService {
 		issue.setPublished(false);
 		this.save(issue);
 		
+	}
+	
+	public List<MagazineIssue> getEditorIssues(RegisteredUser user ) {
+		return this.getEditorIssues(user);
 	}
 	
 	public MagazineIssue save(MagazineIssue issue) {
@@ -44,8 +53,16 @@ public class MagazineIssueService {
 		return saved;
 	}
 	
+	public List<MagazineIssue> findByMagazinePublished(Magazine magazine) {
+		return this.magazineIssueRepository.findByPublishedAndMagazine(true, magazine);
+	}
+	
 	public MagazineIssue findByMagazineUnpublished(Magazine magazine) {
-		return this.magazineIssueRepository.findByPublishedAndMagazine(false, magazine);
+		List<MagazineIssue> issues = this.magazineIssueRepository.findByPublishedAndMagazine(false, magazine);
+		if(issues != null && issues.size() > 0)
+			return issues.get(0);
+		
+		return null;
 	}
 	
 	@Scheduled(initialDelay = 10000, fixedRate = 60000)

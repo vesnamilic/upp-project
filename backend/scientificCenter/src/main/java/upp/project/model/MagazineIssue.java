@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,12 +22,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MagazineIssue {
-
-	@Id
-    @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+
 	@Column(name="number")
 	private int number;
 	
@@ -34,7 +35,8 @@ public class MagazineIssue {
 	
 	@Column(name="published")
 	private boolean published;
-	
+
+	@JsonIgnore
 	@ManyToOne
 	private Magazine magazine;
 	

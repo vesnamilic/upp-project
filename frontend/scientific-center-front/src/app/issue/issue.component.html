@@ -1,3 +1,18 @@
-<p>
-  issue works!
-</p>
+<div>
+  <mat-card class="card">
+    <mat-card-title>
+    <h3 class="mb-3"> Number : {{issue.number}}
+      <span *ngIf="paymentPossible"  style="float: right;">
+        <button (click)="addToShoppingCart()"  class="btn btn-info badge badge-pill ml-2"><i class="fas fa-cart-arrow-down"></i></button>
+      </span>
+    </h3>
+    </mat-card-title>
+    <hr class="my-3">
+    <mat-card-content >
+      Publishing date : {{issue.publicationDate | date:'dd.MM.yyyy'}}
+    </mat-card-content>
+    <mat-card-actions class="mx-2">
+      <a class="btn btn-secondary btn-block " [routerLink]="['/scientific-papers', issue.id]">See All Scientific Papers</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

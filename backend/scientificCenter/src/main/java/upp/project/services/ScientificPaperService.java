@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -15,6 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import upp.project.model.MagazineIssue;
 import upp.project.model.ScientificPaper;
 import upp.project.repositories.ScientificPaperRepository;
 
@@ -23,6 +25,13 @@ public class ScientificPaperService {
 
 	@Autowired
 	private ScientificPaperRepository scientificPaperRepository;
+	
+	
+	public List<ScientificPaper> findByIssue(MagazineIssue issue) {
+		return this.scientificPaperRepository.findByMagazineIssue(issue);
+	}
+	
+	
 
 	public String store(MultipartFile file, String processId, String username) throws RuntimeException {
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -52,7 +61,7 @@ public class ScientificPaperService {
 		}
 
 		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/scientificPaper/download/")
-				.path(processId+"/"+fileName).toUriString();
+				.path(username + "/" + processId+"/"+fileName).toUriString();
 		System.out.println(fileDownloadUri);
 		return fileDownloadUri;
 	}

@@ -21,6 +21,9 @@
       <li [hidden]="!roles.includes('ROLE_EDITOR')" class="nav-item">
         <a class="nav-link" routerLink="/magazine">Magazine</a>
       </li>
+      <li [hidden]="!roles.includes('ROLE_REG_USER')" class="nav-item">
+        <a class="nav-link" routerLink="/purchased-items">Purchased Items</a>
+      </li>
     </ul>
     <ng-template #logInReg>
       <span class="navbar-text actions">
@@ -29,6 +32,7 @@
       </span>
     </ng-template>
     <span class="navbar-text actions" *ngIf="hasUser; else logInReg">
+      <a [hidden]="!roles.includes('ROLE_REG_USER')" routerLink="/shopping-cart" style="padding: 10px" class="btn btn-info badge-pill"><i class="fas fa-cart-arrow-down mr-1"></i>Shopping items</a>
       <a (click)="logOut()"  style="color:rgb(255,255,255);  margin:10px 10px 10px 10px; ">Log out</a>
     </span>
   </div>

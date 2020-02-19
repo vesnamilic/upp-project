@@ -44,12 +44,15 @@ public class RegisteredUser implements UserDetails {
 	@Column(name = "username", nullable = false)
 	private String username;
 
+	@JsonIgnore
 	@Column(name = "password", nullable = false)
 	private String password;
 
+	@JsonIgnore
 	@Column(name = "enabled")
 	private boolean enabled;
 
+	@JsonIgnore
 	@Column(name = "lastPasswordResetDate")
 	private Timestamp lastPasswordResetDate;
 
@@ -74,9 +77,11 @@ public class RegisteredUser implements UserDetails {
 	@Column(name = "requestedReviewerRole")
 	private boolean requestedReviewerRole;
 
+	@JsonIgnore
 	@Column(name = "deleted")
 	private boolean deleted;
 
+	@JsonIgnore
 	@OneToMany
 	private Set<Membership> memberships;
 	

@@ -21,7 +21,6 @@ import org.camunda.bpm.engine.identity.User;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -46,7 +45,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import upp.project.dto.FormFieldsDTO;
 import upp.project.dto.LoginDTO;
-import upp.project.dto.RegistrationDTO;
+import upp.project.dto.UserRegistrationDTO;
 import upp.project.dto.UserDTO;
 import upp.project.model.Authority;
 import upp.project.model.RegisteredUser;
@@ -62,9 +61,6 @@ import upp.project.services.UserCustomService;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
-
-	@Value("${registrationProcessId}")
-	private String processId;
 
 	@Autowired
 	private JwtProvider jwtProvider;
@@ -99,8 +95,6 @@ public class AuthenticationController {
 	
 	@GetMapping(path = "/startProcess", produces = "application/json")
 	public ResponseEntity<?> startRegistrationProcess() {
-		System.out.println("PROCES");
-		System.out.println(this.identityService.getCurrentAuthentication());
 		String username = this.identityService.getCurrentAuthentication().getUserId();
 		
 		if(username!=null) {
@@ -212,7 +206,7 @@ public class AuthenticationController {
 	
 	@PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
 	@PostMapping("/adminRegistration")
-	public ResponseEntity<?> registerUser(@RequestBody RegistrationDTO registrationDTO) {
+	public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDTO registrationDTO) {
 		
 		
 		if (userCustomService.findUser(registrationDTO.getUsername()) != null) {

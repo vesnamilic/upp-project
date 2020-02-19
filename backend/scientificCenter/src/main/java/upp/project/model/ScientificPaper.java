@@ -10,21 +10,24 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class ScientificPaper {
 
 	@Id
-    @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name="title")
@@ -48,6 +51,10 @@ public class ScientificPaper {
 	@ManyToOne
 	private ScientificArea scientificArea;
 	
+	@ManyToOne
+	private RegisteredUser author;
+	
+	@JsonIgnore
 	@ManyToOne
 	private MagazineIssue magazineIssue;
 

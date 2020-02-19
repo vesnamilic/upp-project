@@ -9,6 +9,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -23,12 +24,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Magazine {
-
-	@Id
-	@GeneratedValue
-	private Long id;
 	
-	@Column(name = "email", nullable = false)
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(name = "email", nullable = false, unique=true)
 	private String email;
 
 	@Column(name = "name", nullable = false)
@@ -37,8 +38,14 @@ public class Magazine {
 	@Column(name = "ISSSN", nullable = false)
 	private String ISSSN;
 	
-	@Column(name = "price", nullable = false)
-	private Integer price;
+	@Column(name = "subscriptionPrice")
+	private Integer subscriptionPrice;
+	
+	@Column(name = "issuePrice")
+	private Integer issuePrice;
+	
+	@Column(name = "paperPrice")
+	private Integer paperPrice;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "paymentMethod", nullable = false)
@@ -49,6 +56,9 @@ public class Magazine {
 	
 	@Column(name="deleted")
 	private boolean deleted;
+	
+	@Column(name="registeredOnPaymentHub")
+	private boolean registeredOnPaymentHub;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private RegisteredUser mainEditor;

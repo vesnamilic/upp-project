@@ -35,7 +35,7 @@ spring:
             enable : true
  
 server:
-  port: 8080
+  port: 9991
   ssl:
     enabled: true
     key-store: classpath:scientific_center_keyStore.jks

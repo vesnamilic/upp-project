@@ -25,6 +25,7 @@ public class AssignDOI implements JavaDelegate {
 		ScientificPaper scientificPaper = this.scientificPaperService.getOne(id);
 		
 		if(scientificPaper!=null) {
+			scientificPaper.setPaperPath((String)execution.getVariable("pdf"));
 			scientificPaper.setDoi("10." + RandomStringUtils.randomNumeric(4) + "/" + RandomStringUtils.randomNumeric(3));
 			this.scientificPaperService.save(scientificPaper);
 		}

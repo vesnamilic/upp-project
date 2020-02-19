@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,7 @@ public class ScientificArea {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
+	@JsonIgnore
 	@Column(name="deleted")
 	private boolean deleted;
 

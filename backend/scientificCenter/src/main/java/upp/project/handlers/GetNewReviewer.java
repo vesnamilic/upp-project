@@ -58,13 +58,13 @@ public class GetNewReviewer implements TaskListener {
 		List<FormField> formFields = taskFormData.getFormFields();
 		if (formFields != null) {
 			for (FormField field : formFields) {
-				if (field.getId().equals("newReviewer")) {
+				if (field.getId().equals("oneReviewer")) {
 					// ovo je nase select polje
 					HashMap<String, String> items = (HashMap<String, String>) field.getType().getInformation("values");
 					items.clear();
 					for (RegisteredUser user: reviewers) {
 						if(reviewers.size() == chosenReviewers.size() || (reviewers.size() > chosenReviewers.size() && !chosenReviewers.contains(user.getUsername())))
-							items.put(user.getId().toString(), user.getFirstName() + " " + user.getLastName());
+							items.put(user.getUsername(), user.getFirstName() + " " + user.getLastName());
 					}
 				}
 			}

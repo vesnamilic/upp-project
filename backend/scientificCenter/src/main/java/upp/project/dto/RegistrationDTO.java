@@ -1,43 +1,52 @@
 package upp.project.dto;
 
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class RegistrationDTO {
-	
-	@NotNull
-	private String username;
-
-	@NotNull
-	private String password;
-	
-	@NotNull
-	private String firstName;
-	
-	@NotNull
-	private String lastName;
-	
-	@NotNull
-	private String city;
-	
-	@NotNull
-	private String country;
-	
-	private String title;
-	
-	@NotNull
 	private String email;
-	
-	private boolean requestedReviewerRole;
-	
-	private List<Long> scientificAreas;
+    private String name;
+    private String confirmationLink;
+    private String returnLink;
 
+    public RegistrationDTO() {
+    	
+	}
+    
+	public RegistrationDTO(String email, String name, String confirmationLink, String returnLink) {
+		this.email = email;
+		this.name = name;
+		this.confirmationLink = confirmationLink;
+		this.returnLink = returnLink;
+	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getConfirmationLink() {
+		return confirmationLink;
+	}
+
+	public void setConfirmationLink(String confirmationLink) {
+		this.confirmationLink = confirmationLink;
+	}
+
+	public String getReturnLink() {
+		return returnLink;
+	}
+
+	public void setReturnLink(String returnLink) {
+		this.returnLink = returnLink;
+	}
+       
 }

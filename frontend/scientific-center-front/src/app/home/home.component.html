@@ -1,11 +1,14 @@
-<header class="masthead">
+<header *ngIf="!hasUser || !roles.includes('ROLE_REG_USER')" class="masthead">
   <div class="container h-100">
     <div class="row h-100 align-items-center">
-      <div class="col-12 text-center">
+      <div  class="col-12 text-center">
         <h1 class="font-weight-light">Welcome to Scientific Center</h1>
-        <p [hidden]="hasUser" class="lead">Register to start using our services.</p>
-        <button [hidden]="hasUser" class="btn btn-lg btn-dark btn-login text-uppercase font-weight-light mb-2" [routerLink]="['/register']">Register</button>
+        <p *ngIf="!hasUser" class="lead">Register to start using our services.</p>
+        <button *ngIf="!hasUser" class="btn btn-lg btn-dark btn-login text-uppercase font-weight-light mb-2" [routerLink]="['/register']">Register</button>
       </div>
     </div>
   </div>
 </header>
+<div *ngIf="hasUser && roles.includes('ROLE_REG_USER')"  class="mt-4">
+  <app-all-magazines></app-all-magazines>
+</div>

@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MagazineService {
 
-  magazineService = 'https://localhost:8080/magazine/';
+  magazineService = 'https://localhost:9991/magazine/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -20,6 +20,10 @@ export class MagazineService {
 
   public getAllMagazines() {
     return this.httpClient.get<any>(this.magazineService + 'all');
+  }
+
+  public getMagazinePaymentMethod(magazineId:number) {
+    return this.httpClient.get<any>(this.magazineService + 'paymentMethod/' + magazineId);
   }
 
 }

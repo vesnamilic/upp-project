@@ -1,0 +1,44 @@
+.car-info-list {
+    text-align: left;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    font-size: 13px;
+}
+
+.car-info-list li {
+    border: 1px solid #ccc;
+    padding: 3px;
+    position: relative;
+}
+
+div.car-info-list::before {
+    color: rgb(135, 136, 136);
+    content: "\f0c3";
+    font-family: FontAwesome;
+    margin-right: 5px;
+}
+
+.car-info-list li+li {
+    border-left: 0;
+}
+
+.card {
+    height: 300px;
+}
+
+mat-card-actions{
+    position: absolute;
+    left: 1em;
+    bottom: 0;
+    height: 100px;
+    overflow: hidden;
+}
+.btn-block {
+    padding-left: 2em;
+    padding-right: 2em;
+}

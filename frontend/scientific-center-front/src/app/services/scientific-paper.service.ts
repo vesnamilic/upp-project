@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ScientificPaperService {
 
-  url = 'https://localhost:8080/scientificPaper/';
+  url = 'https://localhost:9991/scientificPaper/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -22,11 +22,15 @@ export class ScientificPaperService {
     formdata.append('file', file);
 
 
-    return this.httpClient.post<any>('https://localhost:8080/scientificPaper/post', formdata);
+    return this.httpClient.post<any>( this.url + 'post', formdata);
   }
 
   downloadFileFromStorage(url: string) {
     return this.httpClient.get<any>(url);
+  }
+
+  getAllPapersByIssue(id: number) {
+    return this.httpClient.get<any>(this.url + 'issue/' + id);
   }
 
 }

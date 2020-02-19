@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class RegistrationService {
 
-  authenticationService = 'https://localhost:8080/auth/';
+  authenticationService = 'https://localhost:9991/auth/';
 
   constructor(private httpClient: HttpClient) { }
 

@@ -20,6 +20,10 @@ public interface MagazineRepository extends JpaRepository<Magazine, Long> {
 	
 	List<Magazine> findByDeletedAndApproved(boolean deleted, boolean approved);
 	
+	List<Magazine> findByDeletedAndApprovedAndRegisteredOnPaymentHub(boolean deleted, boolean approved, boolean regitered);
+	
+	Magazine findByEmailAndDeleted(String email, boolean deleted);
+	
 	@Query("select distinct mag from Magazine as mag inner join mag.editors as editors where ?1 in editors and mag.deleted = false")
 	List<Magazine> findByEditor(RegisteredUser user);
 

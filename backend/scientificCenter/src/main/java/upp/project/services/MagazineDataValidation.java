@@ -37,11 +37,6 @@ public class MagazineDataValidation implements JavaDelegate {
 			return;
 		}
 
-		if ((Integer) map.get("price") <= 0) {
-			execution.setVariable("validationSuccessful", false);
-			return;
-		}
-
 		for (Map<String, String> area : scientificAreas) {
 			if (this.scientificAreaService.findById(Long.parseLong(area.get("item_id"))) == null) {
 				execution.setVariable("validationSuccessful", false);

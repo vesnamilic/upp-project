@@ -64,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/**/*.css", "/**/*.js","/**/*.pdf").permitAll()
 		.antMatchers("/auth/**").permitAll()
 		.antMatchers("/tasks/**").permitAll()
+		.antMatchers("/orders/**").permitAll()
 		.anyRequest().permitAll().and()
 		.addFilterBefore(new AuthenticationTokenFilter(jwtProvider, userCustomService, identityService),BasicAuthenticationFilter.class).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

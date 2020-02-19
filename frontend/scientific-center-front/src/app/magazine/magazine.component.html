@@ -1,3 +1,25 @@
-<p>
-  magazine works!
-</p>
+<div>
+  <mat-card class="card">
+    <mat-card-title>
+      <h3 class="mb-3"> {{magazine.name}}
+        <span *ngIf="magazine.paymentMethod === 'READERS'"  style="float: right;">
+          <button (click)="subscribe()" class="btn btn-secondary badge badge-pill ml-2"><i class="fab fa-stripe-s"></i></button>
+          <button (click)="addToShoppingCart()"  class="btn btn-info badge badge-pill ml-2"><i class="fas fa-cart-arrow-down"></i></button>
+        </span>
+      </h3>
+    </mat-card-title>
+    <hr class="mt-1">
+    <mat-card-content >
+      Scientific Areas:
+      <div class="car-info-list" *ngFor="let item of magazine.scientificAreas" >
+        <i style="color: rgb(135, 136, 136)" class="fas fa-atom mr-1"></i> {{item.name}}
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="mx-2">
+      <a class="btn btn-secondary btn-block" [routerLink]="[ '/issues', magazine.id ]">See All Issues</a>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+
+

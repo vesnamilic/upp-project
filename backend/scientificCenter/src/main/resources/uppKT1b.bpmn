@@ -49,14 +49,6 @@
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="price" label="Price" type="long">
-            <camunda:properties>
-              <camunda:property id="required" value="required" />
-            </camunda:properties>
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
         </camunda:formData>
         <camunda:taskListener delegateExpression="${createRegistrationFormListener}" event="create" />
       </bpmn:extensionElements>
@@ -95,7 +87,7 @@
       <bpmn:outgoing>SequenceFlow_1bswhfe</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="EndEvent_0cy4e8h" name="End Magazine Creation Process">
-      <bpmn:incoming>SequenceFlow_0zf9vvs</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_09wfgdc</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0r4rasy" sourceRef="Task_1xsb7z0" targetRef="ExclusiveGateway_0iln0c1" />
     <bpmn:userTask id="Task_1xsb7z0" name="Review Input Data" camunda:candidateGroups="admin">
@@ -117,11 +109,6 @@
             </camunda:properties>
           </camunda:formField>
           <camunda:formField id="email" label="Email" type="string" defaultValue="${email}">
-            <camunda:properties>
-              <camunda:property id="readonly" value="readonly" />
-            </camunda:properties>
-          </camunda:formField>
-          <camunda:formField id="price" label="Price" type="long" defaultValue="${price}">
             <camunda:properties>
               <camunda:property id="readonly" value="readonly" />
             </camunda:properties>
@@ -193,7 +180,7 @@
       <bpmn:incoming>SequenceFlow_1fosxqj</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_01vnsi0</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0zf9vvs" sourceRef="Task_1r2m5mn" targetRef="EndEvent_0cy4e8h" />
+    <bpmn:sequenceFlow id="SequenceFlow_0zf9vvs" sourceRef="Task_1r2m5mn" targetRef="Task_0rzy44m" />
     <bpmn:serviceTask id="Task_1r2m5mn" name="Save Magazine As Activated" camunda:class="upp.project.services.SavingMagazineAsActivated">
       <bpmn:incoming>SequenceFlow_1ppe1ad</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0zf9vvs</bpmn:outgoing>
@@ -249,7 +236,54 @@
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_1b94hru" sourceRef="ExclusiveGateway_0vd8ks5" targetRef="Task_1xsb7z0" />
     <bpmn:sequenceFlow id="SequenceFlow_15uafht" sourceRef="Task_0lwdy1y" targetRef="ExclusiveGateway_0vd8ks5" />
+    <bpmn:sequenceFlow id="SequenceFlow_09cf09w" sourceRef="Task_0rzy44m" targetRef="Task_08kr8lz" />
+    <bpmn:sequenceFlow id="SequenceFlow_0b989h8" sourceRef="Task_08kr8lz" targetRef="IntermediateThrowEvent_0i779ye" />
+    <bpmn:userTask id="Task_0rzy44m" name="Define Prices in Magazine" camunda:assignee="${currentUser}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="subscriptionPrice" label="Magazine subscription price" type="long">
+            <camunda:properties>
+              <camunda:property id="required" value="required" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="issuePrice" label="Magazine Issues Price" type="long">
+            <camunda:properties>
+              <camunda:property id="required" value="required" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="paperPrice" label="Magazine scientific papers price" type="long">
+            <camunda:properties>
+              <camunda:property id="required" value="required" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0zf9vvs</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_09cf09w</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_08kr8lz" name="Saving Prices And Registration To PaymentPub" camunda:class="upp.project.services.SavePricesAndRegister">
+      <bpmn:incoming>SequenceFlow_09cf09w</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0b989h8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_09wfgdc" sourceRef="IntermediateThrowEvent_0i779ye" targetRef="EndEvent_0cy4e8h" />
+    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_0i779ye" name="PaymentHubRegistration">
+      <bpmn:incoming>SequenceFlow_0b989h8</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_09wfgdc</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_1ml3jyf" />
+    </bpmn:intermediateCatchEvent>
   </bpmn:process>
+  <bpmn:message id="Message_1ml3jyf" name="PaymentHubRegistration" />
+  <bpmn:message id="Message_0vitgrp" />
+  <bpmn:message id="Message_1w4ytzc" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="magazine_creation">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -291,9 +325,9 @@
         <dc:Bounds x="1360" y="177" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_0cy4e8h_di" bpmnElement="EndEvent_0cy4e8h">
-        <dc:Bounds x="2052" y="199" width="36" height="36" />
+        <dc:Bounds x="2492" y="199" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2030" y="242" width="85" height="27" />
+          <dc:Bounds x="2470" y="242" width="85" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0r4rasy_di" bpmnElement="SequenceFlow_0r4rasy">
@@ -333,7 +367,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0zf9vvs_di" bpmnElement="SequenceFlow_0zf9vvs">
         <di:waypoint x="1950" y="217" />
-        <di:waypoint x="2052" y="217" />
+        <di:waypoint x="2020" y="217" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_11898mg_di" bpmnElement="Task_1r2m5mn">
         <dc:Bounds x="1850" y="177" width="100" height="80" />
@@ -432,6 +466,30 @@
         <di:waypoint x="1530" y="390" />
         <di:waypoint x="1530" y="242" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_09cf09w_di" bpmnElement="SequenceFlow_09cf09w">
+        <di:waypoint x="2120" y="217" />
+        <di:waypoint x="2180" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0b989h8_di" bpmnElement="SequenceFlow_0b989h8">
+        <di:waypoint x="2280" y="217" />
+        <di:waypoint x="2352" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0jpwagj_di" bpmnElement="Task_0rzy44m">
+        <dc:Bounds x="2020" y="177" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1xxitfl_di" bpmnElement="Task_08kr8lz">
+        <dc:Bounds x="2180" y="177" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_09wfgdc_di" bpmnElement="SequenceFlow_09wfgdc">
+        <di:waypoint x="2388" y="217" />
+        <di:waypoint x="2492" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1hnj2xk_di" bpmnElement="IntermediateThrowEvent_0i779ye">
+        <dc:Bounds x="2352" y="199" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2327" y="242" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

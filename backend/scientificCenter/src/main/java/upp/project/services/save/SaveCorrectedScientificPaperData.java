@@ -24,7 +24,7 @@ public class SaveCorrectedScientificPaperData implements JavaDelegate {
 		ScientificPaper paper = this.scientificPaperService.getOne(scientificPaperId);
 		
 		if(paper != null) {
-			paper.setPaperPath((String)execution.getVariable("pdfFileLocation"));
+			paper.setPaperPath((String)execution.getVariable("pdf"));
 			this.scientificPaperService.save(paper);
 		}
 		

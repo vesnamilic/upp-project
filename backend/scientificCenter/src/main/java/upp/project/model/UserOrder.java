@@ -9,13 +9,21 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
-public class UserOrder {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class UserOrder {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
 	@Column(name = "orderStatus")
@@ -27,12 +35,13 @@ public class UserOrder {
 
 	@Column(name = "paymentCurrency")
 	private String paymentCurrency;
+	
+	@Column(name = "email")
+	private String email;
 
 	@ManyToOne
 	private RegisteredUser buyer;
 
-	@ManyToOne
-	private Magazine magazine;
 
 	public UserOrder() {
 		super();
@@ -48,52 +57,8 @@ public class UserOrder {
 		this.buyer = buyer;
 	}
 
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
-	public double getPaymentAmount() {
-		return paymentAmount;
-	}
 
-	public void setPaymentAmount(double paymentAmount) {
-		this.paymentAmount = paymentAmount;
-	}
-
-	public String getPaymentCurrency() {
-		return paymentCurrency;
-	}
-
-	public void setPaymentCurrency(String paymentCurrency) {
-		this.paymentCurrency = paymentCurrency;
-	}
-
-	public OrderStatus getOrderStatus() {
-		return orderStatus;
-	}
-
-	public void setOrderStatus(OrderStatus orderStatus) {
-		this.orderStatus = orderStatus;
-	}
-
-	public RegisteredUser getBuyer() {
-		return buyer;
-	}
-
-	public void setBuyer(RegisteredUser buyer) {
-		this.buyer = buyer;
-	}
-
-	public Magazine getMagazine() {
-		return magazine;
-	}
-
-	public void setMagazine(Magazine magazine) {
-		this.magazine = magazine;
-	}
 
 }

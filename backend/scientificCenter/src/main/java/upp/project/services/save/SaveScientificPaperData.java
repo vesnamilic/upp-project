@@ -12,12 +12,14 @@ import org.springframework.stereotype.Service;
 import upp.project.dto.FormSubmitDTO;
 import upp.project.model.Magazine;
 import upp.project.model.MagazineIssue;
+import upp.project.model.RegisteredUser;
 import upp.project.model.ScientificArea;
 import upp.project.model.ScientificPaper;
 import upp.project.services.MagazineIssueService;
 import upp.project.services.MagazineService;
 import upp.project.services.ScientificAreaService;
 import upp.project.services.ScientificPaperService;
+import upp.project.services.UserCustomService;
 
 @Service
 public class SaveScientificPaperData implements JavaDelegate {
@@ -34,6 +36,9 @@ public class SaveScientificPaperData implements JavaDelegate {
 	@Autowired
 	private MagazineService magazineService;
 	
+	@Autowired
+	private UserCustomService userService;
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -42,6 +47,15 @@ public class SaveScientificPaperData implements JavaDelegate {
 		List<FormSubmitDTO> list = (List<FormSubmitDTO>) execution.getVariable("data");
 		Map<String,Object> map = mapListToDto(list);
 		String magazineId  = (String) execution.getVariable("magazineSelection");
+		String username = (String) execution.getVariable("currentUser");
+		
+		RegisteredUser user = this.userService.findUser(username);
+		
+		if(user == null)
+			return;
+		
+		
+		
 		Magazine selectedMagazine = null;
 		try {
 			selectedMagazine = this.magazineService.findByIdActivated(Long.parseLong(magazineId));
@@ -61,11 +75,12 @@ public class SaveScientificPaperData implements JavaDelegate {
 			scientificPaper = this.scientificPaperService.getOne(id); 
 		}
 		
-		
+		System.out.println("PATHHHHHHHHHH" + (String)execution.getVariable("pdf"));
+		scientificPaper.setAuthor(user);
 		scientificPaper.setKeywords((String) map.get("keywords"));
 		scientificPaper.setPaperAbstract((String) map.get("abstract"));
 		scientificPaper.setTitle((String) map.get("title"));
-		scientificPaper.setPaperPath((String)execution.getVariable("pdfFileLocation"));
+		scientificPaper.setPaperPath((String)execution.getVariable("pdf"));
 		scientificPaper.setApproved(false);
 		String scientificAreaId = (String) execution.getVariable("scientificAreas");
 		ScientificArea scientificArea = this.scientificAreaService.findById(Long.parseLong(scientificAreaId));

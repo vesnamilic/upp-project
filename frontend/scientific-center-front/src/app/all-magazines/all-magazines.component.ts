@@ -18,7 +18,7 @@ export class AllMagazinesComponent implements OnInit {
   public getAllMagazines() {
     this.magazineService.getAllMagazines().subscribe(
       data => {
-        console.log(data)
+        console.log(data);
         this.allMagazines = data;
       },
       errors => {

@@ -30,7 +30,6 @@ public class SaveCorrectedMagazineData implements JavaDelegate {
 		magazine.setApproved(false);
 		magazine.setName((String) map.get("name"));
 		magazine.setEmail((String)map.get("email"));
-		magazine.setPrice((Integer)map.get("price"));
 		magazine.setPaymentMethod((((String) map.get("paymentMethod")).equals("authors"))? PaymentMethods.AUTHORS : PaymentMethods.READERS);
 		this.magazineService.save(magazine);
 

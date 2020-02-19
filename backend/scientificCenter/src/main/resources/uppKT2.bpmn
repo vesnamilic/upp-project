@@ -465,7 +465,7 @@
             <camunda:value id="CONDITIONALLY_ACCEPT_WITH_MAJOR_UPDATES" name="Conditionally accept with major updates" />
             <camunda:value id="REFUSE" name="Refuse" />
           </camunda:formField>
-          <camunda:formField id="additionalReviewersNeeded" label="Do you need another opinion?" type="boolean" />
+          <camunda:formField id="additionalReviewersNeeded" label="Do you need another opinion?" type="boolean" defaultValue="${false}" />
         </camunda:formData>
         <camunda:taskListener delegateExpression="${approveScientificPaperTaskListener}" event="create" />
       </bpmn:extensionElements>
@@ -826,7 +826,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_1fexjye" name="Yes" sourceRef="ExclusiveGateway_10wv51z" targetRef="Task_1ed82g9">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reviewersListSize&gt;=3}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:userTask id="Task_1ed82g9" name="Choose New Reviewer">
+    <bpmn:userTask id="Task_1ed82g9" name="Choose New Reviewer" camunda:assignee="${scientificEditor}">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="newReviewer" label="Choose a reviewers" type="enum">
@@ -836,6 +836,7 @@
             <camunda:value id="none" name="---" />
           </camunda:formField>
         </camunda:formData>
+        <camunda:taskListener class="${getNewReviewer}" event="create" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1fexjye</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1evvbws</bpmn:outgoing>
@@ -853,7 +854,7 @@
             </camunda:properties>
           </camunda:formField>
           <camunda:formField id="commentEditor" label="Comment for editor" type="string" />
-          <camunda:formField id="recommendation" type="enum">
+          <camunda:formField id="recommendation" label="Recommendation" type="enum">
             <camunda:value id="ACCEPT" name="Accept" />
             <camunda:value id="ACCEPT_WITH_MINOR_UPDATES" name="Accept with minor updates" />
             <camunda:value id="CONDITIONALLY_ACCEPT_WITH_MAJOR_UPDATES" name="Conditionally accept with major updates" />

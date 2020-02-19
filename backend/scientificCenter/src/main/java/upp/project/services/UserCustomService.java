@@ -172,7 +172,7 @@ public class UserCustomService implements UserDetailsService, JavaDelegate {
 
 		String text = "Poštovani korisniče, \n\nMolimo vas da potvrdite svoju registraciju kako biste mogli da koristite naše usluge: \n"
 				+ "Potvrda registracije se vrši klikom da dati link: "
-				+ "https://localhost:8080/auth/confirmRegistration?token="
+				+ "https://localhost:9991/auth/confirmRegistration?token="
 				+ jwtProvider.generateJwtTokenRegistration((String) execution.getVariable("username"),
 						execution.getProcessInstanceId(), 24)
 				+ "\nS poštovanjem, \nNaucna centrala";

@@ -27,6 +27,13 @@ import { FailedComponent } from './failed/failed.component';
 import { AllMagazinesComponent } from './all-magazines/all-magazines.component';
 import { MagazineComponent } from './magazine/magazine.component';
 import { IssueComponent } from './issue/issue.component';
+import {MatCardModule} from '@angular/material/card';
+import { AllIssuesComponent } from './all-issues/all-issues.component';
+import { AllScientificPapersComponent } from './all-scientific-papers/all-scientific-papers.component';
+import { ScientificPaperComponent } from './scientific-paper/scientific-paper.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { PurchasedItemsComponent } from './purchased-items/purchased-items.component';
+import { MagazineIssuesEditorComponent } from './magazine-issues-editor/magazine-issues-editor.component';
 
 @NgModule({
    declarations: [
@@ -48,7 +55,14 @@ import { IssueComponent } from './issue/issue.component';
       FailedComponent,
       AllMagazinesComponent,
       MagazineComponent,
-      IssueComponent
+      IssueComponent,
+      AllIssuesComponent,
+      IssueComponent,
+      AllScientificPapersComponent,
+      ScientificPaperComponent,
+      ShoppingCartComponent,
+      PurchasedItemsComponent,
+      MagazineIssuesEditorComponent
    ],
    imports: [
       BrowserModule,
@@ -58,7 +72,8 @@ import { IssueComponent } from './issue/issue.component';
       NgMultiSelectDropDownModule.forRoot(),
       BrowserAnimationsModule,
       MatTabsModule,
-      AngularFontAwesomeModule
+      AngularFontAwesomeModule,
+      MatCardModule
    ],
    providers: [
       httpInterceptorProviders

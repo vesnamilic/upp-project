@@ -31,7 +31,7 @@ public class SavingFinalApprovalScientificPaper implements JavaDelegate {
 
 		if (paper != null) {
 			String approval = (String) map.get("finalApproval");
-			if(approval.equals("ACCEPTED")) {
+			if(approval.equals("ACCEPT")) {
 				paper.setApproved(true);
 				this.scientificPaperService.save(paper);
 			}

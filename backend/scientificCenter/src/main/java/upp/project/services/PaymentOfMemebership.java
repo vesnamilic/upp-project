@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import upp.project.dto.OrderInformationDTO;
 import upp.project.dto.OrderResponseDTO;
 import upp.project.model.Magazine;
+import upp.project.model.MagazineOrder;
 import upp.project.model.OrderStatus;
 import upp.project.model.RegisteredUser;
 import upp.project.model.UserOrder;
@@ -50,11 +51,11 @@ public class PaymentOfMemebership implements JavaDelegate {
 			return;
 		}
 
-		UserOrder userOrder = new UserOrder();
+		UserOrder userOrder = new MagazineOrder(selectedMagazine);
 		userOrder.setBuyer(user);
-		userOrder.setMagazine(selectedMagazine);
-		userOrder.setOrderStatus(OrderStatus.CREATED);
-		userOrder.setPaymentAmount(selectedMagazine.getPrice());
+		userOrder.setEmail(selectedMagazine.getEmail());
+		userOrder.setOrderStatus(OrderStatus.INITIATED);
+		userOrder.setPaymentAmount(selectedMagazine.getSubscriptionPrice());
 		userOrder.setPaymentCurrency("USD");
 
 		userOrder = this.userOrderService.save(userOrder);
@@ -64,11 +65,11 @@ public class PaymentOfMemebership implements JavaDelegate {
 
 		OrderInformationDTO orderInformationDTO = new OrderInformationDTO();
 		orderInformationDTO.setPaymentCurrency("USD");
-		orderInformationDTO.setPaymentAmount(selectedMagazine.getPrice().doubleValue());
+		orderInformationDTO.setPaymentAmount(selectedMagazine.getSubscriptionPrice().doubleValue());
 		orderInformationDTO.setEmail(selectedMagazine.getEmail());
-		orderInformationDTO.setSuccessUrl("https://localhost:8080/orders/successMembership"+ "?id=" + userOrder.getId() + "&processId="+execution.getProcessInstanceId());
-		orderInformationDTO.setFailedUrl("https://localhost:8080/orders/failed"+ "?id=" + userOrder.getId() + "&processId="+execution.getProcessInstanceId());
-		orderInformationDTO.setErrorUrl("https://localhost:8080/orders/error"+ "?id=" + userOrder.getId() + "&processId="+execution.getProcessInstanceId());
+		orderInformationDTO.setSuccessUrl("https://localhost:9991/orders/successMembership"+ "?id=" + userOrder.getId() + "&processId="+execution.getProcessInstanceId());
+		orderInformationDTO.setFailedUrl("https://localhost:9991/orders/failed"+ "?id=" + userOrder.getId() + "&processId="+execution.getProcessInstanceId());
+		orderInformationDTO.setErrorUrl("https://localhost:9991/orders/error"+ "?id=" + userOrder.getId() + "&processId="+execution.getProcessInstanceId());
 		orderInformationDTO.setOrderId(userOrder.getId());
 
 		HttpEntity<OrderInformationDTO> request = new HttpEntity<>(orderInformationDTO);
@@ -79,7 +80,13 @@ public class PaymentOfMemebership implements JavaDelegate {
 		} catch (RestClientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			userOrder.setOrderStatus(OrderStatus.ERROR);
+			userOrder.setOrderStatus(OrderStatus.INVALID);
+			return;
+		}
+		
+		userOrder.setOrderStatus(OrderStatus.CREATED);
+		userOrder = this.userOrderService.save(userOrder);
+		if (userOrder == null) {
 			return;
 		}
 		execution.setVariable("redirectUrl", response.getBody().getRedirectUrl());

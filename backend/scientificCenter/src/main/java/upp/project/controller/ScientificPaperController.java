@@ -1,6 +1,8 @@
 package upp.project.controller;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.camunda.bpm.engine.FormService;
@@ -30,6 +32,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import upp.project.dto.FormFieldsDTO;
+import upp.project.dto.ScientificPaperDTO;
+import upp.project.model.MagazineIssue;
+import upp.project.model.ScientificPaper;
+import upp.project.services.MagazineIssueService;
 import upp.project.services.ScientificPaperService;
 
 @RestController
@@ -51,6 +57,9 @@ public class ScientificPaperController {
 
 	@Autowired
 	private IdentityService identityService;
+	
+	@Autowired
+	private MagazineIssueService issueService;
 
 	@PreAuthorize("hasRole('ROLE_REG_USER')")
 	@GetMapping(path = "/startProcess", produces = "application/json")
@@ -85,6 +94,30 @@ public class ScientificPaperController {
 		}
 		return ResponseEntity.status(401).build();
 	}
+	
+	
+	@GetMapping("/issue/{issueId}")
+	public ResponseEntity<?> getAllScientificPaperByIssue(@PathVariable Long issueId)
+	{
+		MagazineIssue issue = this.issueService.getOne(issueId);
+		
+		if(issue == null)
+			return ResponseEntity.badRequest().build();
+		
+		List<ScientificPaper> paper = this.scientificPaperService.findByIssue(issue);
+		
+		List<ScientificPaperDTO> result = paper.stream().map(new Function<ScientificPaper, ScientificPaperDTO>() {
+			@Override
+			public ScientificPaperDTO apply(ScientificPaper paper) {
+				ScientificPaperDTO paperDTO = new ScientificPaperDTO(paper);
+				return paperDTO;
+			}
+		}).collect(Collectors.toList());
+		System.out.println("**********************OVDE SAM " + paper );
+		return ResponseEntity.status(200).body(result);
+	}
+	
+	
 
 	@PostMapping("/post")
 	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
@@ -108,9 +141,10 @@ public class ScientificPaperController {
 		return ResponseEntity.status(HttpStatus.OK).body(fileDownloadUrl);
 	}
 
-	@GetMapping("/download/{processId}/{fileName:.+}")
-	public ResponseEntity<?> downloadFileFromLocal(@PathVariable String processId, @PathVariable String fileName) {
-		Resource resource = this.scientificPaperService.downloadFile(processId,(String) runtimeService.getVariable(processId, "currentUser"), fileName);
+	@GetMapping("/download/{username}/{processId}/{fileName:.+}")
+	public ResponseEntity<?> downloadFileFromLocal(@PathVariable String username, @PathVariable String processId, @PathVariable String fileName) {
+		
+		Resource resource = this.scientificPaperService.downloadFile(processId,username, fileName);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);

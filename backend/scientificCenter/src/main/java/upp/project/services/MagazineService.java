@@ -19,6 +19,10 @@ public class MagazineService {
 		return this.magazineRepository.findByIdAndDeleted(id, false);
 	}
 	
+	public Magazine findByEmail(String email) {
+		return this.magazineRepository.findByEmailAndDeleted(email, false);
+	}
+	
 	public List<Magazine> findByEditor(RegisteredUser editor) {
 		return this.magazineRepository.findByEditor(editor);
 	}
@@ -32,8 +36,9 @@ public class MagazineService {
 	}
 	
 	public List<Magazine> findAllActivated() {
-		return this.magazineRepository.findByDeletedAndApproved(false, true);
+		return this.magazineRepository.findByDeletedAndApprovedAndRegisteredOnPaymentHub(false, true, true);
 	}
+	
 	
 	public Magazine save(Magazine magazine) {
 		Magazine saved = null;

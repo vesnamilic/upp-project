@@ -63,53 +63,57 @@ INSERT INTO registered_user_scientific_areas(registered_user_id, scientific_area
 INSERT INTO registered_user_scientific_areas(registered_user_id, scientific_areas_id) VALUES (513, 3);
 
 
-INSERT INTO magazine(id, email, isssn, approved, deleted, name, payment_method, main_editor_id, price) VALUES (500, 'test@gmail.com', 'issn1', true, false, 'Magazine 1', 'AUTHORS', 504, 50);
-INSERT INTO magazine(id, email, isssn, approved, deleted, name, payment_method, main_editor_id, price) VALUES (501, 'test@gmail.com', 'issn1', true, false, 'Magazine 2', 'READERS', 503, 20);
-INSERT INTO magazine(id, email, isssn, approved, deleted, name, payment_method, main_editor_id, price) VALUES (502, 'test@gmail.com', 'issn1', true, false, 'Magazine 3', 'AUTHORS', 512, 10);
-INSERT INTO magazine(id, email, isssn, approved, deleted, name, payment_method, main_editor_id, price) VALUES (503, 'test@gmail.com', 'issn1', true, false, 'Magazine 4', 'READERS', 513, 15);
-INSERT INTO magazine(id, email, isssn, approved, deleted, name, payment_method, main_editor_id, price) VALUES (504, 'test@gmail.com', 'issn1', true, false, 'Magazine 5', 'AUTHORS', 504, 18);
+INSERT INTO magazine(id, isssn, approved, deleted, email, issue_price, name, paper_price, payment_method, registered_on_payment_hub, subscription_price, main_editor_id)
+VALUES (500, '125415', true, false, 'test@gmail.com', 5, 'Magazine 1', 10, 'READERS', true, 10, 504);
+INSERT INTO magazine(id, isssn, approved, deleted, email, issue_price, name, paper_price, payment_method, registered_on_payment_hub, subscription_price, main_editor_id)
+VALUES (501, '125415', true, false, 'magazine-one@upp.com', 6, 'Magazine 2', 11, 'READERS', true, 10, 504);
+INSERT INTO magazine(id, isssn, approved, deleted, email, issue_price, name, paper_price, payment_method, registered_on_payment_hub, subscription_price, main_editor_id)
+VALUES (503, '125415', true, false, 'test123@gmail.com', 7, 'Magazine 3', 11, 'AUTHORS', true, 10, 504);
+INSERT INTO magazine(id, isssn, approved, deleted, email, issue_price, name, paper_price, payment_method, registered_on_payment_hub, subscription_price, main_editor_id)
+VALUES (504, '125415', true, false, 'maja@gmail.com', 7, 'Magazine 4', 11, 'READERS', true, 10, 504);
 
-INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (500, 3);
 INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (500, 1);
 INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (500, 2);
-INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (501, 3);
-INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (501, 2);
-INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (502, 1);
-INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (502, 3);
-INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (503, 3);
-INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (504, 3);
+INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (500, 3);
+INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (501, 1);
+INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (503, 2);
 INSERT INTO magazine_scientific_areas(magazine_id, scientific_areas_id) VALUES (504, 2);
 
+INSERT INTO magazine_issue(id, "number", publication_date, published, magazine_id)VALUES (500, 1, '2020-01-10 08:21:59.429', true, 500);
+INSERT INTO magazine_issue(id, "number", publication_date, published, magazine_id)VALUES (501, 2, '2020-02-10 08:21:59.429', true, 500);
+INSERT INTO magazine_issue(id, "number", publication_date, published, magazine_id)VALUES (502, 1, '2020-02-10 08:21:59.429', true, 501);
+INSERT INTO magazine_issue(id, "number", publication_date, published, magazine_id)VALUES (503, 1, '2020-02-10 08:21:59.429', true, 503);
+INSERT INTO magazine_issue(id, "number", publication_date, published, magazine_id)VALUES (504, 3, '2020-03-10 08:21:59.429', false, 500);
+INSERT INTO magazine_issue(id, "number", publication_date, published, magazine_id)VALUES (505, 2, '2020-03-10 08:21:59.429', false, 501);
+INSERT INTO magazine_issue(id, "number", publication_date, published, magazine_id)VALUES (506, 1, '2020-03-10 08:21:59.429', false, 503);
+INSERT INTO magazine_issue(id, "number", publication_date, published, magazine_id)VALUES (507, 1, '2020-03-10 08:21:59.429', false, 504);
 
 INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (500, 501);
 INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (500, 502);
 INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (500, 509);
 INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (500, 510);
 INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (500, 511);
-
 INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (501, 509);
 INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (501, 510);
-
-INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (502, 509);
-INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (502, 511);
-
 INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (503, 501);
 INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (503, 512);
+INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (504, 501);
+INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (504, 512);
 
-INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (504, 505);
-INSERT INTO magazine_reviewers(magazine_id, reviewers_id) VALUES (504, 509);
 
-INSERT INTO magazine_editors(magazine_id, editors_id) VALUES (500, 513);
-INSERT INTO magazine_editors(magazine_id, editors_id) VALUES (501, 512);
 
-INSERT INTO magazine_issue(id,"number", publication_date, published, magazine_id) VALUES (500,1, '2020-03-10 08:21:59.429', false , 500);
-INSERT INTO magazine_issue(id,"number", publication_date, published, magazine_id) VALUES (501,1, '2020-03-10 08:21:59.429', false , 501);
-INSERT INTO magazine_issue(id,"number", publication_date, published, magazine_id) VALUES (502,1, '2020-03-10 08:21:59.429', false , 502);
-INSERT INTO magazine_issue(id,"number", publication_date, published, magazine_id) VALUES (503,1, '2020-03-10 08:21:59.429', false , 503);
-INSERT INTO magazine_issue(id,"number", publication_date, published, magazine_id) VALUES (504,1, '2020-03-10 08:21:59.429', false , 504);
+INSERT INTO scientific_paper(id, approved, doi, keywords, paper_abstract, paper_path, title, author_id, magazine_issue_id, scientific_area_id)
+	VALUES (500, true, 'doi', 'kljucne reci' , 'reci neke', '...', 'Naucni rad 1', 504 , 500 , 1);
+INSERT INTO scientific_paper(id, approved, doi, keywords, paper_abstract, paper_path, title, author_id, magazine_issue_id, scientific_area_id)
+	VALUES (501, true, 'doi', 'kljucne reci' , 'reci neke', '...', 'Naucni rad 2', 504 , 500 , 1);
+INSERT INTO scientific_paper(id, approved, doi, keywords, paper_abstract, paper_path, title, author_id, magazine_issue_id, scientific_area_id)
+	VALUES (502, true, 'doi', 'kljucne reci' , 'reci neke', '...', 'Naucni rad 1', 504 , 501 , 1);
 
-INSERT INTO membership(id, payed_until, magazine_id) VALUES (500, '2020-03-10 08:21:59.429', 500);
-INSERT INTO membership(id, payed_until, magazine_id) VALUES (501, '2020-03-10 08:21:59.429', 504);
+INSERT INTO coauthor(id, city, country, email, first_name, last_name) VALUES (500, 'Vrbas', 'Srbija', 'testic@gmail.com', 'Vesna', 'Milic');
+INSERT INTO coauthor(id, city, country, email, first_name, last_name) VALUES (501, 'Vrbas', 'Srbija', 'testic@gmail.com', 'Milica', 'Milic');
+INSERT INTO coauthor(id, city, country, email, first_name, last_name) VALUES (502, 'Vrbas', 'Srbija', 'testic@gmail.com', 'Jovan', 'Milic');
 
-INSERT INTO registered_user_memberships(registered_user_id, memberships_id) VALUES (507, 500);
-INSERT INTO registered_user_memberships(registered_user_id, memberships_id) VALUES (506, 501);
+INSERT INTO scientific_paper_coauthors(scientific_paper_id, coauthors_id) VALUES (500, 500);
+INSERT INTO scientific_paper_coauthors(scientific_paper_id, coauthors_id) VALUES (500, 501);
+INSERT INTO scientific_paper_coauthors(scientific_paper_id, coauthors_id) VALUES (501, 502);
+
